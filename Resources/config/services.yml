@@ -1,0 +1,13 @@
+# Services
+services:
+
+    # Factories
+    esit_getlawclient.services.factories.http_factory:
+        class: Esit\Getlawclient\Classes\Services\Factories\HttpFactory
+
+    # Helper
+    esit_getlawclient.services.helper.log_helper:
+        class: Esit\Getlawclient\Classes\Services\Helper\LogHelper
+        arguments: ['@monolog.logger.contao']
+
+

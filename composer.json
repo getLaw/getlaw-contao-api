@@ -1,0 +1,36 @@
+{
+    "name": "esit/getlawclient",
+    "description": "Bei dieser Software handelt es sich um eine Erweiterung für das Open Source CMS Contao, mit der sich Texte über die Schnittstelle von [getLaw](https://getlaw.de) anzeigen lassen.",
+    "license": "GPL-3.0-or-later",
+    "type": "contao-bundle",
+    "authors": [
+        {
+            "name": "Patrick Froch",
+            "email": "info@easySolutionsIT.de",
+            "homepage": "http://easySolutionsIT.de",
+            "role": "Developer"
+        }
+    ],
+    "support": {
+        "email": "info@easySolutionsIT.de"
+    },
+    "require": {
+        "php": "^7.2",
+        "contao/core-bundle": "^4.4",
+        "contao/manager-bundle": "^4.4",
+        "contao/conflicts": "@dev"
+    },
+    "require-dev": {
+        "contao/test-case": "^4.0",
+        "roave/security-advisories": "dev-master",
+        "phpunit/phpunit": "^8.5"
+    },
+    "autoload": {
+        "psr-4": {
+            "Esit\\Getlawclient\\": ""
+        }
+    },
+    "extra": {
+        "contao-manager-plugin": "Esit\\Getlawclient\\Classes\\Contao\\Manager\\Plugin"
+    }
+}

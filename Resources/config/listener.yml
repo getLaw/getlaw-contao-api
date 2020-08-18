@@ -1,0 +1,35 @@
+# EventListener
+services:
+    # OnLoadDataListener
+    esit_getlawclient.listener.on_load_data_listener.generate_url:
+        class: Esit\Getlawclient\Classes\Listener\OnLoadDataListener
+        arguments: ['@esit_getlawclient.services.factories.http_factory', '@esit_getlawclient.services.helper.log_helper']
+        tags:
+            - { name: kernel.event_listener, event: getlaw.on.load.data.event, method: generateUrl, priority: 2048 }
+
+    esit_getlawclient.listener.on_load_data_listener.load_data:
+        class: Esit\Getlawclient\Classes\Listener\OnLoadDataListener
+        arguments: ['@esit_getlawclient.services.factories.http_factory', '@esit_getlawclient.services.helper.log_helper']
+        tags:
+            - { name: kernel.event_listener, event: getlaw.on.load.data.event, method: loadData, priority: 1024 }
+
+
+    # OnLoadDataListener
+    esit_getlawclient.listener.on_save_data_listener.generate_json:
+        class: Esit\Getlawclient\Classes\Listener\OnSaveDataListener
+        arguments: ['@database_connection', '@esit_getlawclient.services.helper.log_helper']
+        tags:
+            - { name: kernel.event_listener, event: getlaw.on.save.data.event, method: generateJson, priority: 2048 }
+
+    esit_getlawclient.listener.on_save_data_listener.save_data:
+        class: Esit\Getlawclient\Classes\Listener\OnSaveDataListener
+        arguments: ['@database_connection', '@esit_getlawclient.services.helper.log_helper']
+        tags:
+            - { name: kernel.event_listener, event: getlaw.on.save.data.event, method: saveData, priority: 2048 }
+
+
+
+
+
+
+
