@@ -19,6 +19,12 @@ use Symfony\Contracts\HttpClient\HttpClientInterface;
  */
 class HttpFactory
 {
+
+
+    /**
+     * Erstellte einen HttpClient
+     * @return HttpClientInterface
+     */
     public function getClient(): HttpClientInterface
     {
         return HttpClient::create();

@@ -1,4 +1,3 @@
-# Services
 services:
 
     # Factories
@@ -6,8 +5,19 @@ services:
         class: Esit\Getlawclient\Classes\Services\Factories\HttpFactory
 
     # Helper
+    esit_getlawclient.services.helper.json_helper:
+        class: Esit\Getlawclient\Classes\Services\Helper\JsonHelper
+        arguments: ['@esit_getlawclient.services.helper.log_helper']
+        public: true
+
     esit_getlawclient.services.helper.log_helper:
         class: Esit\Getlawclient\Classes\Services\Helper\LogHelper
         arguments: ['@monolog.logger.contao']
+
+
+parameters:
+    # getLaw-Settings
+    getlaw_server_url: 'https://getlaw.de/contentapi/'
+
 
 

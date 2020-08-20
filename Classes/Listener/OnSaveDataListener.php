@@ -12,6 +12,7 @@ namespace Esit\Getlawclient\Classes\Listener;
 
 use Doctrine\DBAL\Connection;
 use Esit\Getlawclient\Classes\Events\OnSaveDataEvent;
+use Esit\Getlawclient\Classes\Services\Helper\JsonHelper;
 use Esit\Getlawclient\Classes\Services\Helper\LogHelper;
 
 /**
@@ -29,20 +30,21 @@ class OnSaveDataListener
 
 
     /**
-     * @var LogHelper
+     * @var JsonHelper
      */
-    protected $logger;
+    protected $jsonHelper;
 
 
     /**
      * OnSaveDataListener constructor.
      * @param Connection $connection
      * @param LogHelper  $logger
+     * @param JsonHelper $jsonHelper
      */
-    public function __construct(Connection $connection, LogHelper $logger)
+    public function __construct(Connection $connection, JsonHelper $jsonHelper)
     {
-        $this->query    = $connection->createQueryBuilder();
-        $this->logger   = $logger;
+        $this->query        = $connection->createQueryBuilder();
+        $this->jsonHelper   = $jsonHelper;
     }
 
 
@@ -54,13 +56,9 @@ class OnSaveDataListener
     {
         $data = $event->getData();
 
-        try {
-            if (false === $data['error']) {
-                $json = \json_encode($data, \JSON_THROW_ON_ERROR);
-                $event->setJson($json);
-            }
-        } catch (\Exception $e) {
-            $this->logger->addError($e->getMessage(), __METHOD__);
+        if (isset($data['error']) && false === $data['error']) {
+            $json = $this->jsonHelper->encode($data);
+            $event->setJson($json);
         }
     }
 
@@ -78,8 +76,7 @@ class OnSaveDataListener
         $cteId      = $event->getCteId();
         $dbValues   = [\time(), $json];
 
-        $this->query
-            ->update($table)
+        $this->query->update($table)
             ->set($timeField, '?')
             ->set($dataField, '?')
             ->setParameters($dbValues)

@@ -12,7 +12,12 @@ namespace Esit\Getlawclient\Classes\Listener;
 
 use Esit\Getlawclient\Classes\Events\OnLoadDataEvent;
 use Esit\Getlawclient\Classes\Services\Factories\HttpFactory;
+use Esit\Getlawclient\Classes\Services\Helper\JsonHelper;
 use Esit\Getlawclient\Classes\Services\Helper\LogHelper;
+use Symfony\Contracts\HttpClient\Exception\ClientExceptionInterface;
+use Symfony\Contracts\HttpClient\Exception\RedirectionExceptionInterface;
+use Symfony\Contracts\HttpClient\Exception\ServerExceptionInterface;
+use Symfony\Contracts\HttpClient\Exception\TransportExceptionInterface;
 
 /**
  * Class OnLoadDataListener
@@ -27,18 +32,30 @@ class OnLoadDataListener
      */
     protected $http;
 
+
+    /**
+     * @var LogHelper
+     */
     protected $logger;
+
+
+    /**
+     * @var JsonHelper
+     */
+    protected $jsonHelper;
 
 
     /**
      * OnLoadDataListener constructor.
      * @param HttpFactory $httpFactory
      * @param LogHelper   $logger
+     * @param JsonHelper  $jsonHelper
      */
-    public function __construct(HttpFactory $httpFactory, LogHelper $logger)
+    public function __construct(HttpFactory $httpFactory, LogHelper $logger, JsonHelper $jsonHelper)
     {
-        $this->http     = $httpFactory->getClient();
-        $this->logger   = $logger;
+        $this->http         = $httpFactory->getClient();
+        $this->logger       = $logger;
+        $this->jsonHelper   = $jsonHelper;
     }
 
 
@@ -55,16 +72,19 @@ class OnLoadDataListener
 
 
     /**
-     * Lädt die Daten über die Schnittstelle.
-     * @param OnLoadDataEvent $event
+     * @param  OnLoadDataEvent               $event
+     * @throws ClientExceptionInterface
+     * @throws RedirectionExceptionInterface
+     * @throws ServerExceptionInterface
+     * @throws TransportExceptionInterface
      */
     public function loadData(OnLoadDataEvent $event): void
     {
         try {
             $url        = $event->getUrl();
             $reponse    = $this->http->request('GET', $url);
-            $content    = $reponse->getContent();
-            $data       = \json_decode($content, true, 512, \JSON_THROW_ON_ERROR);
+            $content    = $reponse->getContent(false);
+            $data       = $this->jsonHelper->decode($content);
             $event->setData($data);
         } catch (\Exception $e) {
             $this->logger->addError($e->getMessage(), __METHOD__);

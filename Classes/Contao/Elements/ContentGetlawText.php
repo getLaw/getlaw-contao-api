@@ -12,9 +12,7 @@ declare(strict_types = 1);
 namespace Esit\Getlawclient\Classes\Contao\Elements;
 
 use Contao\System;
-use Esit\Getlawclient\Classes\Events\OnLoadDataEvent;
-use Esit\Getlawclient\Classes\Events\OnSaveDataEvent;
-use Esit\Getlawclient\Classes\Services\Helper\LogHelper;
+use Esit\Getlawclient\Classes\Events\OnHandleDataEvent;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
 /**
@@ -33,15 +31,16 @@ class ContentGetlawText extends \ContentElement
 
 
     /**
-     * @var EventDispatcherInterface
+     * Url der getLaw-Schnittstelle
+     * @var string
      */
-    protected $di;
+    protected $getlawServer = '';
 
 
     /**
-     * @var LogHelper
+     * @var EventDispatcherInterface
      */
-    protected $logger;
+    protected $di;
 
 
     /**
@@ -52,8 +51,8 @@ class ContentGetlawText extends \ContentElement
         if ('BE' === TL_MODE) {
             $this->genBeOutput();
         } else {
-            $this->di       = System::getContainer()->get('event_dispatcher');
-            $this->logger   = System::getContainer()->get('esit_getlawclient.services.helper.log_helper');
+            $this->di           = System::getContainer()->get('event_dispatcher');
+            $this->getlawServer = System::getContainer()->getParameter('getlaw_server_url');
             $this->genFeOutput();
         }
     }
@@ -76,75 +75,22 @@ class ContentGetlawText extends \ContentElement
      */
     protected function genFeOutput(): void
     {
-        $content = $GLOBALS['TL_LANG']['MSC']['nodata'];
+        $content = '';
 
-        if (null !== $this->getlawdata) {
-            $content = $this->getContent($this->getlawdata);
+        if (!empty($GLOBALS['TL_LANG']['MSC']['nodata'])) {
+            $content = $GLOBALS['TL_LANG']['MSC']['nodata'];
         }
 
-        if (empty($this->savedon) || $this->savedon < (\time() - (24 * 3600))) {
-            $data = $this->loadData($this->getlawtextkey);
-
-            if (false === $data['error'] && !empty($data['content'])) {
-                $this->saveData((int)$this->id, $data);
-                $content = $data['content'];
-            }
-        }
-
-        $this->Template->content = $content;
-    }
-
-
-    /**
-     * Ruft das Laden der Daten über die Schnittstelle auf.
-     * @param  string $textkey
-     * @return array
-     */
-    protected function loadData(string $textkey): array
-    {
-        $event = new OnLoadDataEvent();
-        $event->setTextkey($textkey);
-        $event->setHost('https://docgen.esit-testserver.de:44372/contentapi/'); #@todo Auslagern!!!
+        $event = new OnHandleDataEvent();
+        $event->setContent((string)$content);
+        $event->setGetlawServer((string)$this->getlawServer);
+        $event->setTextkey((string)$this->getlawtextkey);
+        $event->setDataStingFromDb((string)$this->getlawdata);
+        $event->setSavedOn((int)$this->savedon);
+        $event->setCteId((int)$this->id);
 
         $this->di->dispatch($event::NAME, $event);
 
-        return $event->getData();
-    }
-
-
-    /**
-     * Speichert die Daten in der Db.
-     * @param int   $cteId
-     * @param array $data
-     */
-    protected function saveData(int $cteId, array $data): void
-    {
-        $event = new OnSaveDataEvent();
-        $event->setData($data);
-        $event->setCteId($cteId);
-
-        $this->di->dispatch($event::NAME, $event);
-    }
-
-
-    /**
-     * Liest den gespeicherten Inhalt aus der Db aus.
-     * @param  string $getlawData
-     * @return string
-     */
-    protected function getContent(string $getlawData): string
-    {
-        #@todo in Alle decode-Konstrukte in einen Helper auslagern!!!
-        try {
-            $data = \json_decode($getlawData, true, 512, \JSON_THROW_ON_ERROR);
-
-            if (!empty($data['content'])) {
-                return $data['content'];
-            }
-        } catch (\JsonException $e) {
-            $this->logger->addError($e->getMessage(), __METHOD__);
-        }
-
-        return '';
+        $this->Template->content = $event->getContent();
     }
 }
