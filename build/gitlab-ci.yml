@@ -10,7 +10,7 @@ runtests:
         GIT_STRATEGY: none
     before_script:
         - COMPOSER_MEMORY_LIMIT=-1 /usr/local/bin/composer.phar config repositories.$PROJECT_NAME vcs $PROJEKT_URL --working-dir=/htdocs/
-        - COMPOSER_MEMORY_LIMIT=-1 /usr/local/bin/composer.phar require esit/$PROJECT_NAME:dev-$CI_COMMIT_REF_NAME --working-dir=/htdocs/
+        - COMPOSER_MEMORY_LIMIT=-1 /usr/local/bin/composer.phar require getLaw/$PROJECT_NAME:dev-$CI_COMMIT_REF_NAME --working-dir=/htdocs/
     script:
         - cd /htdocs/vendor/esit/$PROJECT_NAME/
         - ./build/runtests.sh
