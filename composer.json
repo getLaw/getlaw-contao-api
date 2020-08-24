@@ -1,5 +1,5 @@
 {
-    "name": "esit/getlawclient",
+    "name": " getLaw/getLaw-Contao-API ",
     "description": "Bei dieser Software handelt es sich um eine Erweiterung für das Open Source CMS Contao, mit der sich Texte über die Schnittstelle von [getLaw](https://getlaw.de) anzeigen lassen.",
     "license": "GPL-3.0-or-later",
     "type": "contao-bundle",
