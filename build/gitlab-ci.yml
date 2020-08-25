@@ -12,6 +12,7 @@ runtests:
         - COMPOSER_MEMORY_LIMIT=-1 /usr/local/bin/composer.phar config repositories.getlaw-contao-api vcs $PROJEKT_URL --working-dir=/htdocs/
         - COMPOSER_MEMORY_LIMIT=-1 /usr/local/bin/composer.phar require getlaw/getlaw-contao-api:dev-$CI_COMMIT_REF_NAME --working-dir=/htdocs/
     script:
+        - ls /htdocs/vendor/getLaw/
         - cd /htdocs/vendor/getLaw/getLaw-Contao-API/
         - ./build/runtests.sh
     coverage: '/Methods: \d+\.\d+/'
