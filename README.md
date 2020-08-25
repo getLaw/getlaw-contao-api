@@ -1,4 +1,4 @@
-# Getlawclient
+# getLaw-Contao-API
 
 
 ## Beschreibung
@@ -22,4 +22,4 @@ Die Erweiterung kann einfach über den Contao Manager installiert werden, in dem
 
 ## Einrichtung
 
-Die Erweiterung stellt das Inhaltselement "getLaw - Text" zur Verfügung. In diesem Inhaltselement wird der auf der Seite [getLaw](https://getlaw.de) erzeugte Textschlüssel eingegeben. Beim Aufruf der Seite wird nun automatisch der entsprecheden Text über die Content Schnittstelle geladen und angezeigt.
+Die Erweiterung stellt das Inhaltselement "getLaw-Contao-API" zur Verfügung. In diesem Inhaltselement wird der auf der Seite [getLaw](https://getlaw.de) erzeugte Textschlüssel eingegeben. Beim Aufruf der Seite wird nun automatisch der entsprecheden Text über die Content Schnittstelle geladen und angezeigt.
