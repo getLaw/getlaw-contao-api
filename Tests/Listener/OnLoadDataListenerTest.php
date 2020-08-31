@@ -27,14 +27,27 @@ class OnLoadDataListenerTest extends EsitTestCase
 {
 
 
+    /**
+     * @var HttpClientInterface
+     */
     protected $httpClient;
 
+
+    /**
+     * @var HttpFactory
+     */
     protected $httpFactory;
 
 
+    /**
+     * @var LogHelper
+     */
     protected $logger;
 
 
+    /**
+     * @var JsonHelper
+     */
     protected $jsonHelper;
 
 
@@ -53,6 +66,7 @@ class OnLoadDataListenerTest extends EsitTestCase
                                    ->disableOriginalConstructor()
                                    ->onlyMethods(['addError'])
                                    ->getMock();
+
         $this->jsonHelper   = $this->getMockBuilder(JsonHelper::class)
                                    ->disableOriginalConstructor()
                                    ->onlyMethods(['decode'])
@@ -110,6 +124,52 @@ class OnLoadDataListenerTest extends EsitTestCase
         $listner    = new OnLoadDataListener($this->httpFactory, $this->logger, $this->jsonHelper);
         $event      = new OnLoadDataEvent();
         $event->setUrl('https://example.org/textkey');
+        $listner->loadData($event);
+        self::assertEquals(['newContent'], $event->getData());
+    }
+
+
+    public function testLoadDataDoNotSetHeaderIfNameIsEmpty(): void
+    {
+        $reponse    = $this->getMockForAbstractClass(ResponseInterface::class);
+        $reponse->expects(self::once())->method('getContent')->with(false)->willReturn('content');
+        $this->httpClient->expects(self::once())->method('request')->with('GET', 'https://example.org/textkey', [])->willReturn($reponse);
+        $this->jsonHelper->expects(self::once())->method('decode')->with('content')->willReturn(['newContent']);
+        $listner    = new OnLoadDataListener($this->httpFactory, $this->logger, $this->jsonHelper);
+        $event      = new OnLoadDataEvent();
+        $event->setUrl('https://example.org/textkey');
+        $event->setApiVersion('1');
+        $listner->loadData($event);
+        self::assertEquals(['newContent'], $event->getData());
+    }
+
+
+    public function testLoadDataDoNotSetHeaderIfVersionIsEmpty(): void
+    {
+        $reponse    = $this->getMockForAbstractClass(ResponseInterface::class);
+        $reponse->expects(self::once())->method('getContent')->with(false)->willReturn('content');
+        $this->httpClient->expects(self::once())->method('request')->with('GET', 'https://example.org/textkey', [])->willReturn($reponse);
+        $this->jsonHelper->expects(self::once())->method('decode')->with('content')->willReturn(['newContent']);
+        $listner    = new OnLoadDataListener($this->httpFactory, $this->logger, $this->jsonHelper);
+        $event      = new OnLoadDataEvent();
+        $event->setUrl('https://example.org/textkey');
+        $event->setGetlawHeader('X-test-Header');
+        $listner->loadData($event);
+        self::assertEquals(['newContent'], $event->getData());
+    }
+
+    public function testLoadDataSetHeaderIfVersionAndNameAreSet(): void
+    {
+        $reponse    = $this->getMockForAbstractClass(ResponseInterface::class);
+        $reponse->expects(self::once())->method('getContent')->with(false)->willReturn('content');
+        $header     = ['headers' => ['X-test-Header' => '1']];
+        $this->httpClient->expects(self::once())->method('request')->with('GET', 'https://example.org/textkey', $header)->willReturn($reponse);
+        $this->jsonHelper->expects(self::once())->method('decode')->with('content')->willReturn(['newContent']);
+        $listner    = new OnLoadDataListener($this->httpFactory, $this->logger, $this->jsonHelper);
+        $event      = new OnLoadDataEvent();
+        $event->setUrl('https://example.org/textkey');
+        $event->setGetlawHeader('X-test-Header');
+        $event->setApiVersion('1');
         $listner->loadData($event);
         self::assertEquals(['newContent'], $event->getData());
     }

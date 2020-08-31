@@ -82,7 +82,15 @@ class OnLoadDataListener
     {
         try {
             $url        = $event->getUrl();
-            $reponse    = $this->http->request('GET', $url);
+            $headerName = $event->getGetlawHeader();
+            $apiVersion = $event->getApiVersion();
+            $header     = [];
+
+            if ('' !== $headerName && '' !== $apiVersion) {
+                $header = ['headers' => [$headerName => $apiVersion]];
+            }
+
+            $reponse    = $this->http->request('GET', $url, $header);
             $content    = $reponse->getContent(false);
             $data       = $this->jsonHelper->decode($content);
             $event->setData($data);

@@ -38,6 +38,20 @@ class ContentGetlawText extends \ContentElement
 
 
     /**
+     * Name des Versionsheaders der getLaw-Api.
+     * @var string
+     */
+    protected $getlawHeader = '';
+
+
+    /**
+     * Majorversion der API.
+     * @var string
+     */
+    protected $apiVersion = '';
+
+
+    /**
      * @var EventDispatcherInterface
      */
     protected $di;
@@ -53,6 +67,8 @@ class ContentGetlawText extends \ContentElement
         } else {
             $this->di           = System::getContainer()->get('event_dispatcher');
             $this->getlawServer = System::getContainer()->getParameter('getlaw_server_url');
+            $this->apiVersion   = System::getContainer()->getParameter('getlaw_api_version');
+            $this->getlawHeader = System::getContainer()->getParameter('getlaw_api_header');
             $this->genFeOutput();
         }
     }
@@ -84,6 +100,8 @@ class ContentGetlawText extends \ContentElement
         $event = new OnHandleDataEvent();
         $event->setContent((string)$content);
         $event->setGetlawServer((string)$this->getlawServer);
+        $event->setGetlawHeader($this->getlawHeader);
+        $event->setApiVersion($this->apiVersion);
         $event->setTextkey((string)$this->getlawtextkey);
         $event->setDataStingFromDb((string)$this->getlawdata);
         $event->setSavedOn((int)$this->savedon);

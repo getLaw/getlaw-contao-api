@@ -68,13 +68,17 @@ class OnHandleDataListener
     public function loadData(OnHandleDataEvent $event, string $name, EventDispatcherInterface $di): void
     {
         $savedon        = $event->getSavedOn();
-        $textkey        = $event->getTextkey();
         $getlawServer   = $event->getGetlawServer();
+        $textkey        = $event->getTextkey();
+        $header         = $event->getGetlawHeader();
+        $version        = $event->getApiVersion();
 
         if ($savedon < (\time() - (24 * 3600))) {
             $loadEvent = new OnLoadDataEvent();
             $loadEvent->setTextkey($textkey);
             $loadEvent->setHost($getlawServer);
+            $loadEvent->setGetlawHeader($header);
+            $loadEvent->setApiVersion($version);
 
             $di->dispatch($loadEvent::NAME, $loadEvent);
 

@@ -121,6 +121,8 @@ class OnHandleDataListenerTest extends EsitTestCase
                 self::callback(function(OnLoadDataEvent $event) {
                     self::assertSame('textkey', $event->getTextkey());
                     self::assertSame('https://example.org/', $event->getHost());
+                    self::assertSame('X-test-Header', $event->getGetlawHeader());
+                    self::assertSame('12', $event->getApiVersion());
                     $event->setData(['testData']);
 
                     return true;
@@ -131,6 +133,8 @@ class OnHandleDataListenerTest extends EsitTestCase
         $event->setSavedOn(\time()- (48 * 3600));
         $event->setTextkey('textkey');
         $event->setGetlawServer('https://example.org/');
+        $event->setGetlawHeader('X-test-Header');
+        $event->setApiVersion('12');
         $listener           = new OnHandleDataListener($this->jsonHelper);
         $listener->loadData($event, '', $eventDispatcher);
         self::assertSame(['testData'], $event->getDataFromApi());

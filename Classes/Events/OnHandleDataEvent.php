@@ -37,6 +37,20 @@ class OnHandleDataEvent extends Event
 
 
     /**
+     * Name des Versionsheaders der getLaw-Api.
+     * @var string
+     */
+    protected $getlawHeader = '';
+
+
+    /**
+     * Majorversion der API.
+     * @var string
+     */
+    protected $apiVersion = '';
+
+
+    /**
      * Textkey
      * @var string
      */
@@ -111,6 +125,42 @@ class OnHandleDataEvent extends Event
     public function setGetlawServer(string $getlawServer): void
     {
         $this->getlawServer = $getlawServer;
+    }
+
+
+    /**
+     * @return string
+     */
+    public function getGetlawHeader(): string
+    {
+        return $this->getlawHeader;
+    }
+
+
+    /**
+     * @param string $getlawHeader
+     */
+    public function setGetlawHeader(string $getlawHeader): void
+    {
+        $this->getlawHeader = $getlawHeader;
+    }
+
+
+    /**
+     * @return string
+     */
+    public function getApiVersion(): string
+    {
+        return $this->apiVersion;
+    }
+
+
+    /**
+     * @param string $apiVersion
+     */
+    public function setApiVersion(string $apiVersion): void
+    {
+        $this->apiVersion = $apiVersion;
     }
 
 
