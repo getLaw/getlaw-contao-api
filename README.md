@@ -11,7 +11,7 @@ __e@sy Solutions IT:__ Patrick Froch <info@easySolutionsIT.de>
 
 ## Voraussetzungen
 
-- php: >=7.2
+- php: >=7.3
 - contao/core-bundle: >=4.4
 
 

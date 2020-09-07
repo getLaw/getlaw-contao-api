@@ -12,6 +12,10 @@ namespace Esit\Getlawclient\Classes\Events;
 
 use Symfony\Component\EventDispatcher\Event;
 
+/**
+ * Class OnHandleDataEvent
+ * @package Esit\Getlawclient\Classes\Events
+ */
 class OnHandleDataEvent extends Event
 {
 
