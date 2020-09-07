@@ -83,6 +83,18 @@ class OnHandleDataListenerTest extends EsitTestCase
     }
 
 
+    public function testLoadDataDoNothingIfAutoRenewIsDisabled(): void
+    {
+        $eventDispatcher    = $this->createMock(EventDispatcherInterface::class);
+        $eventDispatcher->expects(self::never())->method('dispatch');
+        $event              = new OnHandleDataEvent();
+        $event->setDisableRenew(true);
+        $event->setSavedOn(\time()- (48 * 3600));
+        $listener           = new OnHandleDataListener($this->jsonHelper);
+        $listener->loadData($event, '', $eventDispatcher);
+    }
+
+
     public function testLoadDataCallsEventDispatcherIfSaveonIsNotEmpty(): void
     {
         $eventDispatcher = $this->createMock(EventDispatcherInterface::class);
@@ -103,6 +115,32 @@ class OnHandleDataListenerTest extends EsitTestCase
 
         $event              = new OnHandleDataEvent();
         $event->setSavedOn(\time()- (48 * 3600));
+        $listener           = new OnHandleDataListener($this->jsonHelper);
+        $listener->loadData($event, '', $eventDispatcher);
+        self::assertSame(['testData'], $event->getDataFromApi());
+    }
+
+
+    public function testLoadDataCallsEventDispatcherIfManualRenewIsTrue(): void
+    {
+        $eventDispatcher = $this->createMock(EventDispatcherInterface::class);
+
+        $eventDispatcher
+            ->expects(self::once())
+            ->method('dispatch')
+            ->with(
+                self::equalTo(OnLoadDataEvent::NAME),
+                self::callback(function(OnLoadDataEvent $event) {
+                    self::assertEmpty($event->getTextkey());
+                    self::assertEmpty($event->getHost());
+                    $event->setData(['testData']);
+
+                    return true;
+                })
+            );
+
+        $event              = new OnHandleDataEvent();
+        $event->setManualRenew(true);
         $listener           = new OnHandleDataListener($this->jsonHelper);
         $listener->loadData($event, '', $eventDispatcher);
         self::assertSame(['testData'], $event->getDataFromApi());

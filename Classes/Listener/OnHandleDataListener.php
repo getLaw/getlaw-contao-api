@@ -72,8 +72,10 @@ class OnHandleDataListener
         $textkey        = $event->getTextkey();
         $header         = $event->getGetlawHeader();
         $version        = $event->getApiVersion();
+        $disable        = $event->getDisableRenew();
+        $manual         = $event->getManualRenew();
 
-        if ($savedon < (\time() - (24 * 3600))) {
+        if (true === $manual || (false === $disable && $savedon < (\time() - (24 * 3600)))) {
             $loadEvent = new OnLoadDataEvent();
             $loadEvent->setTextkey($textkey);
             $loadEvent->setHost($getlawServer);

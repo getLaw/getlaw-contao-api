@@ -15,7 +15,7 @@
 $table = 'tl_content';
 
 /* Palettes */
-$GLOBALS['TL_DCA'][$table]['palettes']['getlawtext'] = '{type_legend},type,headline;{getlaw_legend},getlawtextkey;{protected_legend:hide},protected;{expert_legend:hide},guests,cssID,space;{invisible_legend:hide},invisible,start,stop;';
+$GLOBALS['TL_DCA'][$table]['palettes']['getlawtext'] = '{type_legend},type,headline;{getlaw_legend},getlawtextkey,getlawdisableautorenew;{protected_legend:hide},protected;{expert_legend:hide},guests,cssID,space;{invisible_legend:hide},invisible,start,stop;';
 
 /* Fields */
 $GLOBALS['TL_DCA'][$table]['fields']['getlawtextkey'] = [
@@ -24,6 +24,14 @@ $GLOBALS['TL_DCA'][$table]['fields']['getlawtextkey'] = [
     'inputType'             => 'text',
     'eval'                  => ['mandatory'=>true, 'maxlength'=>128, 'tl_class'=>'long'],
     'sql'                   => "varchar(128) NOT NULL default ''"
+];
+
+$GLOBALS['TL_DCA'][$table]['fields']['getlawdisableautorenew'] = [
+    'label'                 => &$GLOBALS['TL_LANG'][$table]['getlawdisableautorenew'],
+    'exclude'               => true,
+    'inputType'             => 'checkbox',
+    'eval'                  => ['tl_class'=>'w50 m12'],
+    'sql'                   => "char(1) NOT NULL default ''"
 ];
 
 $GLOBALS['TL_DCA'][$table]['fields']['savedon'] = [

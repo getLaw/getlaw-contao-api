@@ -62,6 +62,21 @@ class OnHandleDataEvent extends Event
 
 
     /**
+     * Bei true wird der Text nicht automartisch neu vom Server geladen.
+     * @var bool
+     */
+    protected $disableRenew = false;
+
+
+    /**
+     * Ist der Wert auf true gesetzt, hat der Uaer das Neuladen des Textes manuell angestoßen,
+     * es wird kein Zeitintervall geprüft.
+     * @var bool
+     */
+    protected $manualRenew = false;
+
+
+    /**
      * Datum des letzten Datenabrufs.
      * @var int
      */
@@ -183,6 +198,42 @@ class OnHandleDataEvent extends Event
     public function setTextkey(string $textkey): void
     {
         $this->textkey = $textkey;
+    }
+
+
+    /**
+     * @return bool
+     */
+    public function getDisableRenew(): bool
+    {
+        return $this->disableRenew;
+    }
+
+
+    /**
+     * @param bool $disableRenew
+     */
+    public function setDisableRenew(bool $disableRenew): void
+    {
+        $this->disableRenew = $disableRenew;
+    }
+
+
+    /**
+     * @return bool
+     */
+    public function getManualRenew(): bool
+    {
+        return $this->manualRenew;
+    }
+
+
+    /**
+     * @param bool $manualRenew
+     */
+    public function setManualRenew(bool $manualRenew): void
+    {
+        $this->manualRenew = $manualRenew;
     }
 
 

@@ -106,6 +106,8 @@ class ContentGetlawText extends \ContentElement
         $event->setDataStingFromDb((string)$this->getlawdata);
         $event->setSavedOn((int)$this->savedon);
         $event->setCteId((int)$this->id);
+        $event->setDisableRenew((bool)$this->getlawdisableautorenew);
+        $event->setManualRenew(false);
 
         $this->di->dispatch($event::NAME, $event);
 
