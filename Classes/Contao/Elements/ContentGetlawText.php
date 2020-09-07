@@ -66,9 +66,9 @@ class ContentGetlawText extends \ContentElement
             $this->genBeOutput();
         } else {
             $this->di           = System::getContainer()->get('event_dispatcher');
-            $this->getlawServer = System::getContainer()->getParameter('getlaw_server_url');
-            $this->apiVersion   = System::getContainer()->getParameter('getlaw_api_version');
-            $this->getlawHeader = System::getContainer()->getParameter('getlaw_api_header');
+            $this->getlawServer = $GLOBALS['getLaw']['server_url'] ?: 'https://www.getlaw.de/api/texts/';
+            $this->apiVersion   = $GLOBALS['getLaw']['api_header'] ?: 'X-getLaw-API-Version';
+            $this->getlawHeader = $GLOBALS['getLaw']['api_version'] ?: '1';
             $this->genFeOutput();
         }
     }

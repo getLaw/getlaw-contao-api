@@ -14,6 +14,17 @@
  */
 $table = 'tl_content';
 
+/**
+ * Action
+ */
+$GLOBALS['TL_DCA'][$table]['list']['operations']['renew'] = [
+    'label'             => &$GLOBALS['TL_LANG'][$table]['renew'],
+    'href'              => 'key=renew',
+    'icon'              => 'sync.svg',
+    'button_callback'   => array(\Esit\Getlawclient\Classes\Contao\Callbacks\ButtonManager::class, 'addRenewButton'),
+    'attributes'        => 'onclick="if(!confirm(\'' . $GLOBALS['TL_LANG'][$table]['renewConfirm'] . '\'))return false;Backend.getScrollOffset()"'
+];
+
 /* Palettes */
 $GLOBALS['TL_DCA'][$table]['palettes']['getlawtext'] = '{type_legend},type,headline;{getlaw_legend},getlawtextkey,getlawdisableautorenew;{protected_legend:hide},protected;{expert_legend:hide},guests,cssID,space;{invisible_legend:hide},invisible,start,stop;';
 

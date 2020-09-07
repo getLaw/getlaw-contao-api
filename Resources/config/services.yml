@@ -5,6 +5,9 @@ services:
         class: Esit\Getlawclient\Classes\Services\Factories\HttpFactory
 
     # Helper
+    esit_getlawclient.services.helper.contao_helper:
+        class: Esit\Getlawclient\Classes\Services\Helper\ContaoHelper
+
     esit_getlawclient.services.helper.json_helper:
         class: Esit\Getlawclient\Classes\Services\Helper\JsonHelper
         arguments: ['@esit_getlawclient.services.helper.log_helper']
@@ -13,13 +16,3 @@ services:
     esit_getlawclient.services.helper.log_helper:
         class: Esit\Getlawclient\Classes\Services\Helper\LogHelper
         arguments: ['@monolog.logger.contao']
-
-
-parameters:
-    # getLaw-Settings
-    getlaw_server_url: 'https://www.getlaw.de/api/texts/'
-    getlaw_api_header: 'X-getLaw-API-Version'
-    getlaw_api_version: '1'
-
-
-

@@ -45,4 +45,31 @@ services:
         class: Esit\Getlawclient\Classes\Listener\OnSaveDataListener
         arguments: ['@database_connection', '@esit_getlawclient.services.helper.json_helper']
         tags:
-            - { name: kernel.event_listener, event: getlaw.on.save.data.event, method: saveData, priority: 2048 }
+            - { name: kernel.event_listener, event: getlaw.on.save.data.event, method: saveData, priority: 1024 }
+
+
+    # OnManuelRenewListener
+    esit_getlawclient.listener.on_save_data_listener.load_cte:
+        class: Esit\Getlawclient\Classes\Listener\OnManuelRenewListener
+        arguments: ['@database_connection', '@esit_getlawclient.services.helper.contao_helper']
+        tags:
+            - { name: kernel.event_listener, event: getlaw.on.manual.renew.event, method: loadCte, priority: 4096 }
+
+    esit_getlawclient.listener.on_save_data_listener.load_text:
+        class: Esit\Getlawclient\Classes\Listener\OnManuelRenewListener
+        arguments: [ '@database_connection', '@esit_getlawclient.services.helper.contao_helper']
+        tags:
+            - { name: kernel.event_listener, event: getlaw.on.manual.renew.event, method: loadText, priority: 3072 }
+
+    esit_getlawclient.listener.on_save_data_listener.generate_message:
+        class: Esit\Getlawclient\Classes\Listener\OnManuelRenewListener
+        arguments: [ '@database_connection', '@esit_getlawclient.services.helper.contao_helper']
+        tags:
+            - { name: kernel.event_listener, event: getlaw.on.manual.renew.event, method: generateMessage, priority: 2048 }
+
+    esit_getlawclient.listener.on_save_data_listener.redirect:
+        class: Esit\Getlawclient\Classes\Listener\OnManuelRenewListener
+        arguments: [ '@database_connection', '@esit_getlawclient.services.helper.contao_helper']
+        tags:
+            - { name: kernel.event_listener, event: getlaw.on.manual.renew.event, method: redirect, priority: 1024 }
+

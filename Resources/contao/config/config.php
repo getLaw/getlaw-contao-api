@@ -32,6 +32,19 @@
  */
 
 /**
+ * BACK END MODULES
+ */
+$GLOBALS['BE_MOD']['content']['article']['renew']   = [\Esit\Getlawclient\Classes\Contao\Callbacks\ButtonManager::class, 'handleRenewText'];
+
+/**
  * CONTENT ELEMENTS
  */
-$GLOBALS['TL_CTE']['getlaw']['getlawtext'] = \Esit\Getlawclient\Classes\Contao\Elements\ContentGetlawText::class;
+$GLOBALS['TL_CTE']['getlaw']['getlawtext']          = \Esit\Getlawclient\Classes\Contao\Elements\ContentGetlawText::class;
+
+
+/**
+ * getLaw-Settings
+ */
+$GLOBALS['getLaw']['server_url']                    = 'https://www.getlaw.de/api/texts/';
+$GLOBALS['getLaw']['api_header']                    = 'X-getLaw-API-Version';
+$GLOBALS['getLaw']['api_version']                   = '1';

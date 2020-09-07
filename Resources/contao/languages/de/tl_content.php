@@ -17,6 +17,12 @@ $table = 'tl_content';
 
 
 /**
+ * Operations
+ */
+$GLOBALS['TL_LANG'][$table]['renew']                    = ['Text manuell abrufen', 'Text manuell abrufen'];
+$GLOBALS['TL_LANG'][$table]['renewConfirm']             = 'Wollen Sie den Text jetzt abrufen?';
+
+/**
  * Fields
  */
 $GLOBALS['TL_LANG'][$table]['getlawtextkey']            = ['getLaw-Textkey', 'Bitte geben Sie den Textkey ein, den Sie in der Liste mit Ihren Texten auf der Seite https://getLaw.de/ erstellt haben.'];

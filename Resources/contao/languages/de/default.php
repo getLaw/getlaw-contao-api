@@ -20,3 +20,5 @@ $GLOBALS['TL_LANG']['CTE']['getlawtext']    = ['getLaw - Text', 'getLaw - Text']
  * Misc
  */
 $GLOBALS['TL_LANG']['MSC']['nodata']        = 'Keinen Text gefunden';
+$GLOBALS['TL_LANG']['MSC']['apiError']      = 'Beim Laden des Textes ist ein Fehler aufgetreten';
+$GLOBALS['TL_LANG']['MSC']['apiSuccess']    = 'Lade des Text erfolgreich';

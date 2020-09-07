@@ -132,24 +132,6 @@ class OnHandleDataEvent extends Event
     /**
      * @return string
      */
-    public function getGetlawServer(): string
-    {
-        return $this->getlawServer;
-    }
-
-
-    /**
-     * @param string $getlawServer
-     */
-    public function setGetlawServer(string $getlawServer): void
-    {
-        $this->getlawServer = $getlawServer;
-    }
-
-
-    /**
-     * @return string
-     */
     public function getGetlawHeader(): string
     {
         return $this->getlawHeader;
@@ -180,6 +162,24 @@ class OnHandleDataEvent extends Event
     public function setApiVersion(string $apiVersion): void
     {
         $this->apiVersion = $apiVersion;
+    }
+
+
+    /**
+     * @return string
+     */
+    public function getGetlawServer(): string
+    {
+        return $this->getlawServer;
+    }
+
+
+    /**
+     * @param string $getlawServer
+     */
+    public function setGetlawServer(string $getlawServer): void
+    {
+        $this->getlawServer = $getlawServer;
     }
 
 
