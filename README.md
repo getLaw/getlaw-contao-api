@@ -3,11 +3,15 @@
 
 ## Beschreibung
 
-Bei dieser Software handelt es sich um eine Erweiterung für das Open Source CMS Contao, mit der sich Texte über die Schnittstelle von [getLaw](https://getlaw.de) anzeigen lassen.
+Mit dieser Erweiterung kannst Du die Rechtstexte der Legal-Tech-Plattform [www.getLaw.de](https://www.getLaw.de) automatisiert in Deine Website und Deinen Shop einbinden.
+Die Erweiterung ruft die Rechtstexte automatisch alle 24 Stunden von [www.getLaw.de](https://www.getLaw.de) ab. Falls gewünscht, kannst Du den automatischen Abruf durch Setzen eines Häkchens deaktivieren. Ein manueller Abruf der Rechtstexte von [www.getLaw.de](https://www.getLaw.de) ist jederzeit über den Button in der Liste der Inhaltselemente möglich.
+Zur Verfügung stehen derzeit folgende Rechtstexte für Websites und Shops: Impressum, Datenschutzerklärung, allgemeine Geschäftsbedingungen und Widerrufsbelehrung.
+
 
 ## Autor
 
 __e@sy Solutions IT:__ Patrick Froch <info@easySolutionsIT.de>
+
 
 ## Voraussetzungen
 
@@ -17,9 +21,14 @@ __e@sy Solutions IT:__ Patrick Froch <info@easySolutionsIT.de>
 
 ## Installation
 
-Die Erweiterung kann einfach über den Contao Manager installiert werden, in dem nach "getLaw" gesucht wird.
+Die Erweiterung wird über den Contao Manager installiert. Suchen Sie dort nach der Erweiterung mit der folgenden Bezeichnung: ** getlaw/getlaw-contao-api**
+
+Wenn Sie die Erweiterung gefunden haben, klicken Sie auf "Hinzufügen" und installieren diese.
+
 
 
 ## Einrichtung
 
-Die Erweiterung stellt das Inhaltselement "getLaw-Contao-API" zur Verfügung. In diesem Inhaltselement wird der auf der Seite [getLaw](https://getlaw.de) erzeugte Textschlüssel eingegeben. Beim Aufruf der Seite wird nun automatisch der entsprecheden Text über die Content Schnittstelle geladen und angezeigt.
+Nach der Installation der Erweiterung steht Ihnen im Backend von Contao ein neues Inhaltselement mit der Bezeichnung "getLaw - Text" zur Verfügung. Fügen Sie dieses an der gewünschten Stelle ein. Tragen Sie dann in das Feld "API-Schlüssel" den individuellen API-Schlüssel Ihres Textes ein.
+
+Der Text wird nun erstmalig geladen. Die Erweiterung ruft den Text danach automatisch alle 24 Stunden von [www.getLaw.de](https://www.getLaw.de) ab. Falls gewünscht, können Sie den automatischen Abruf durch Setzen eines Häkchens deaktivieren. Ein manueller Abruf des Textes von [www.getLaw.de](https://www.getLaw.de) ist jederzeit über den Button in der Liste der Inhaltselemente möglich.
