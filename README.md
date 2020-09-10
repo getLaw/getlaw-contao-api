@@ -10,7 +10,7 @@ Zur Verfügung stehen derzeit folgende Rechtstexte für Websites und Shops: Impr
 
 ## Autor
 
-__e@sy Solutions IT:__ Patrick Froch <info@easySolutionsIT.de>
+__getLaw:__ <info@getLaw.de>
 
 
 ## Voraussetzungen
@@ -21,7 +21,7 @@ __e@sy Solutions IT:__ Patrick Froch <info@easySolutionsIT.de>
 
 ## Installation
 
-Die Erweiterung wird über den Contao Manager installiert. Suchen Sie dort nach der Erweiterung mit der folgenden Bezeichnung: ** getlaw/getlaw-contao-api**
+Die Erweiterung wird über den Contao Manager installiert. Suchen Sie dort nach der Erweiterung mit der folgenden Bezeichnung: __getlaw/getlaw-contao-api__
 
 Wenn Sie die Erweiterung gefunden haben, klicken Sie auf "Hinzufügen" und installieren diese.
 
