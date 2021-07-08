@@ -109,7 +109,7 @@ class ContentGetlawText extends \ContentElement
         $event->setDisableRenew((bool)$this->getlawdisableautorenew);
         $event->setManualRenew(false);
 
-        $this->di->dispatch($event::NAME, $event);
+        $this->di->dispatch($event, $event::NAME);
 
         $this->Template->content = $event->getContent();
     }

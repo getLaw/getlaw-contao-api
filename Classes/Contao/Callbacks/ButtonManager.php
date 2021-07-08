@@ -100,7 +100,7 @@ class ButtonManager
             $event->setGetlawServer($getlawServer);
             $event->setApiVersion($apiVersion);
             $event->setGetlawHeader($getlawHeader);
-            $di->dispatch($event::NAME, $event);
+            $di->dispatch($event,$event::NAME);
         }
     }
 }
