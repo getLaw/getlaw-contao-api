@@ -16,7 +16,7 @@ use Esit\Getlawclient\Classes\Events\OnSaveDataEvent;
 use Esit\Getlawclient\Classes\Listener\OnHandleDataListener;
 use Esit\Getlawclient\Classes\Services\Helper\JsonHelper;
 use Esit\Getlawclient\EsitTestCase;
-use Symfony\Component\EventDispatcher\EventDispatcherInterface;
+use Symfony\Contracts\EventDispatcher\EventDispatcherInterface;
 
 /**
  * Class OnHandleDataListenerTest
@@ -103,14 +103,14 @@ class OnHandleDataListenerTest extends EsitTestCase
             ->expects(self::once())
             ->method('dispatch')
             ->with(
-                self::equalTo(OnLoadDataEvent::NAME),
                 self::callback(function(OnLoadDataEvent $event) {
                     self::assertEmpty($event->getTextkey());
                     self::assertEmpty($event->getHost());
                     $event->setData(['testData']);
 
                     return true;
-                })
+                }),
+                self::equalTo(OnLoadDataEvent::NAME)
             );
 
         $event              = new OnHandleDataEvent();
@@ -129,14 +129,14 @@ class OnHandleDataListenerTest extends EsitTestCase
             ->expects(self::once())
             ->method('dispatch')
             ->with(
-                self::equalTo(OnLoadDataEvent::NAME),
                 self::callback(function(OnLoadDataEvent $event) {
                     self::assertEmpty($event->getTextkey());
                     self::assertEmpty($event->getHost());
                     $event->setData(['testData']);
 
                     return true;
-                })
+                }),
+                self::equalTo(OnLoadDataEvent::NAME)
             );
 
         $event              = new OnHandleDataEvent();
@@ -155,7 +155,6 @@ class OnHandleDataListenerTest extends EsitTestCase
             ->expects(self::once())
             ->method('dispatch')
             ->with(
-                self::equalTo(OnLoadDataEvent::NAME),
                 self::callback(function(OnLoadDataEvent $event) {
                     self::assertSame('textkey', $event->getTextkey());
                     self::assertSame('https://example.org/', $event->getHost());
@@ -164,7 +163,8 @@ class OnHandleDataListenerTest extends EsitTestCase
                     $event->setData(['testData']);
 
                     return true;
-                })
+                }),
+                self::equalTo(OnLoadDataEvent::NAME)
             );
 
         $event              = new OnHandleDataEvent();
@@ -246,13 +246,13 @@ class OnHandleDataListenerTest extends EsitTestCase
             ->expects(self::once())
             ->method('dispatch')
             ->with(
-                self::equalTo(OnSaveDataEvent::NAME),
                 self::callback(function(OnSaveDataEvent $event) {
                     self::assertSame(['error'=>false, 'content'=>'testcontent'],$event->getData());
                     self::assertSame(12, $event->getCteId());
 
                     return true;
-                })
+                }),
+                self::equalTo(OnSaveDataEvent::NAME)
             );
 
         $event              = new OnHandleDataEvent();

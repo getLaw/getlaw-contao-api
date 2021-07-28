@@ -16,10 +16,10 @@
     },
     "require": {
         "php": "^7.3",
-        "contao/core-bundle": "^4.4"
+        "contao/core-bundle": "4.4.* || 4.9.*"
     },
     "require-dev": {
-        "contao/test-case": "^4.0",
+        "contao/test-case": "^4.4",
         "roave/security-advisories": "dev-master",
         "phpunit/phpunit": "^9.0"
     },

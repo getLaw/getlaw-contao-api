@@ -30,7 +30,7 @@ class LogHelperTest extends TestCase
         $context= new ContaoContext($place, TL_ERROR);
         $logger = $this->getMockBuilder(Logger::class)
                        ->disableOriginalConstructor()
-                       ->onlyMethods(['addError'])
+                       ->addMethods(['addError'])
                        ->getMock();
 
         $logger->expects(self::once())->method('addError')->with($msg, ['contao' => $context]);

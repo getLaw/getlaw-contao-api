@@ -254,7 +254,6 @@ class OnManuelRenewListenerTest extends EsitTestCase
         $version        = '1';
         $name           = 'on.test.my.methode';
         $this->di->expects(self::once())->method('dispatch')->with(
-            self::equalTo(OnHandleDataEvent::NAME),
             self::callback(static function (OnHandleDataEvent $event) {
                 self::assertSame('https://example.org/', $event->getGetlawServer());
                 self::assertSame('X-My-Test-Header', $event->getGetlawHeader());
@@ -264,7 +263,8 @@ class OnManuelRenewListenerTest extends EsitTestCase
                 self::assertTrue($event->getManualRenew());
 
                 return true;
-            })
+            }),
+            self::equalTo(OnHandleDataEvent::NAME)
         );
         $listener       = new OnManuelRenewListener($this->connection, $this->ctoHelper);
         $event          = new OnManuelRenewEvent();

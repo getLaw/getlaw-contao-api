@@ -14,7 +14,7 @@ use Esit\Getlawclient\Classes\Events\OnHandleDataEvent;
 use Esit\Getlawclient\Classes\Events\OnLoadDataEvent;
 use Esit\Getlawclient\Classes\Events\OnSaveDataEvent;
 use Esit\Getlawclient\Classes\Services\Helper\JsonHelper;
-use Symfony\Component\EventDispatcher\EventDispatcherInterface;
+use Symfony\Contracts\EventDispatcher\EventDispatcherInterface;
 
 /**
  * Class OnHandleDataListener
