@@ -82,7 +82,7 @@ class OnHandleDataListener
             $loadEvent->setGetlawHeader($header);
             $loadEvent->setApiVersion($version);
 
-            $di->dispatch($loadEvent::NAME, $loadEvent);
+            $di->dispatch($loadEvent, $loadEvent::NAME);
 
             $event->setDataFromApi($loadEvent->getData());
         }
@@ -105,7 +105,7 @@ class OnHandleDataListener
             $saveEvent->setData($data);
             $saveEvent->setCteId($cteId);
 
-            $di->dispatch($saveEvent::NAME, $saveEvent);
+            $di->dispatch($saveEvent, $saveEvent::NAME);
             $event->setContent($data['content']);
         }
     }

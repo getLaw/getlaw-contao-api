@@ -10,7 +10,7 @@
  */
 namespace Esit\Getlawclient\Classes\Events;
 
-use Symfony\Component\EventDispatcher\Event;
+use Symfony\Contracts\EventDispatcher\Event;
 
 /**
  * Class OnSaveDataEvent

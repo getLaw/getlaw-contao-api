@@ -14,3 +14,4 @@ autoload*
 vendor/
 **/**/*.example
 CHANGELOG.*
+/nbproject

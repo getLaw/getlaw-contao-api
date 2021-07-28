@@ -96,7 +96,7 @@ class OnManuelRenewListener
             $handleData->setCteId($cteId);
             $handleData->setManualRenew(true);
 
-            $di->dispatch($handleData::NAME, $handleData);
+            $di->dispatch($handleData, $handleData::NAME);
             $event->setDataFromApi($handleData->getDataFromApi());
         }
     }
