@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <phpunit xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:noNamespaceSchemaLocation="https://schema.phpunit.de/8.5/phpunit.xsd"
+         xsi:noNamespaceSchemaLocation="https://schema.phpunit.de/9.5/phpunit.xsd"
          bootstrap="./bootstrap.php"
          forceCoversAnnotation="false"
          beStrictAboutCoversAnnotation="false"
@@ -9,22 +9,24 @@
          verbose="false"
          colors="true"
          backupGlobals="false"
-         backupStaticAttributes="false">
-
-    <!-- Coverage -->
-    <logging>
-        <log type="coverage-html" target="/tmp/coverage" lowUpperBound="35" highLowerBound="70"/>
-        <log type="coverage-text" target="php://stdout" showUncoveredFiles="false" showOnlySummary="true" lowUpperBound="35" highLowerBound="70"/>
-    </logging>
-    <filter>
-        <whitelist>
+         backupStaticAttributes="false"
+         executionOrder="random"
+         resolveDependencies="true"
+>
+    <coverage>
+        <include>
             <directory suffix=".php">../../Classes/</directory>
-            <exclude>
-                <directory suffix=".php">../../Classes/Contao/</directory>
-            </exclude>
-        </whitelist>
-    </filter>
-
+        </include>
+        <exclude>
+            <directory suffix=".php">../../Classes/Contao/</directory>
+        </exclude>
+        <report>
+            <html outputDirectory="/tmp/coverage" lowUpperBound="35" highLowerBound="70"/>
+            <text outputFile="php://stdout" showUncoveredFiles="false" showOnlySummary="true"/>
+        </report>
+    </coverage>
+    <!-- Coverage -->
+    <logging/>
     <!-- Tests -->
     <testsuites>
         <testsuite name="esitTestSuite">
