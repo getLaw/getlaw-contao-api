@@ -5,7 +5,7 @@ runtests:
     stage: test
     except:
         - tags
-    image: easysolutionsit/contao-testsuite:1.0.9
+    image: easysolutionsit/contao-testsuite:1.0.10
     variables:
         GIT_STRATEGY: none
     before_script:
