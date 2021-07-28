@@ -44,6 +44,6 @@ class LogHelper
      */
     public function addError(string $msg, string $place): void
     {
-        $this->logger->addError($msg, ['contao' => new ContaoContext($place, TL_ERROR)]);
+        $this->logger->error($msg, ['contao' => new ContaoContext($place, TL_ERROR)]);
     }
 }
