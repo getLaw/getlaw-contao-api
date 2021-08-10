@@ -12,8 +12,7 @@ declare(strict_types = 1);
 namespace Esit\Getlawclient\Classes\Contao\Elements;
 
 use Contao\System;
-use Esit\Getlawclient\Classes\Events\OnHandleDataEvent;
-use Symfony\Component\EventDispatcher\EventDispatcherInterface;
+use Esit\Getlawclient\Classes\Services\Helper\LoadDataHelper;
 
 /**
  * Class ContentGetlawText
@@ -31,30 +30,9 @@ class ContentGetlawText extends \ContentElement
 
 
     /**
-     * Url der getLaw-Schnittstelle
-     * @var string
+     * @var LoadDataHelper
      */
-    protected $getlawServer = '';
-
-
-    /**
-     * Name des Versionsheaders der getLaw-Api.
-     * @var string
-     */
-    protected $getlawHeader = '';
-
-
-    /**
-     * Majorversion der API.
-     * @var string
-     */
-    protected $apiVersion = '';
-
-
-    /**
-     * @var EventDispatcherInterface
-     */
-    protected $di;
+    protected $helper;
 
 
     /**
@@ -65,10 +43,7 @@ class ContentGetlawText extends \ContentElement
         if ('BE' === TL_MODE) {
             $this->genBeOutput();
         } else {
-            $this->di           = System::getContainer()->get('event_dispatcher');
-            $this->getlawServer = $GLOBALS['getLaw']['server_url'] ?: 'https://www.getlaw.de/api/texts/';
-            $this->apiVersion   = $GLOBALS['getLaw']['api_header'] ?: 'X-getLaw-API-Version';
-            $this->getlawHeader = $GLOBALS['getLaw']['api_version'] ?: '1';
+            $this->helper = System::getContainer()->get('esit_getlawclient.services.helper.load_data_helper');
             $this->genFeOutput();
         }
     }
@@ -91,26 +66,12 @@ class ContentGetlawText extends \ContentElement
      */
     protected function genFeOutput(): void
     {
-        $content = '';
+        $textkey            = (string)$this->getlawtextkey;
+        $id                 = (int)$this->id;
+        $getlawdata         = (string)$this->getlawdata;
+        $savedon            = (int)$this->savedon;
+        $disableautorenew   = (bool)$this->getlawdisableautorenew;
 
-        if (!empty($GLOBALS['TL_LANG']['MSC']['nodata'])) {
-            $content = $GLOBALS['TL_LANG']['MSC']['nodata'];
-        }
-
-        $event = new OnHandleDataEvent();
-        $event->setContent((string)$content);
-        $event->setGetlawServer((string)$this->getlawServer);
-        $event->setGetlawHeader($this->getlawHeader);
-        $event->setApiVersion($this->apiVersion);
-        $event->setTextkey((string)$this->getlawtextkey);
-        $event->setDataStingFromDb((string)$this->getlawdata);
-        $event->setSavedOn((int)$this->savedon);
-        $event->setCteId((int)$this->id);
-        $event->setDisableRenew((bool)$this->getlawdisableautorenew);
-        $event->setManualRenew(false);
-
-        $this->di->dispatch($event, $event::NAME);
-
-        $this->Template->content = $event->getContent();
+        $this->Template->content = $this->helper->loadData($textkey, $id, $getlawdata, $savedon, $disableautorenew);
     }
 }

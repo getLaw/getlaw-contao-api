@@ -8,7 +8,7 @@
          beStrictAboutTodoAnnotatedTests="true"
          verbose="false"
          colors="true"
-         backupGlobals="false"
+         backupGlobals="true"
          backupStaticAttributes="false"
          executionOrder="random"
          resolveDependencies="true"

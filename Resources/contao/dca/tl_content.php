@@ -14,6 +14,13 @@
  */
 $table = 'tl_content';
 
+
+/**
+ * Config
+ */
+$GLOBALS['TL_DCA'][$table]['config']['onsubmit_callback'][] = [\Esit\Getlawclient\Classes\Contao\Callbacks\TlContent::class, 'loadData'];
+
+
 /**
  * Action
  */

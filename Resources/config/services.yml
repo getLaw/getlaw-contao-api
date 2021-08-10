@@ -13,6 +13,11 @@ services:
         arguments: ['@esit_getlawclient.services.helper.log_helper']
         public: true
 
+    esit_getlawclient.services.helper.load_data_helper:
+        class: Esit\Getlawclient\Classes\Services\Helper\LoadDataHelper
+        arguments: [ '@event_dispatcher']
+        public: true
+
     esit_getlawclient.services.helper.log_helper:
         class: Esit\Getlawclient\Classes\Services\Helper\LogHelper
         arguments: ['@monolog.logger.contao']

@@ -54,8 +54,14 @@ class OnHandleDataListener
 
             if (!empty($data['content'])) {
                 $event->setContent($data['content']);
+
+                return;
             }
         }
+
+        // Auf manuelles Laden setzen, wennnoch kein Text vorhanden ist,
+        // damit initial der Text auf jeden Fall geladen wird!
+        $event->setManualRenew(true);
     }
 
 
