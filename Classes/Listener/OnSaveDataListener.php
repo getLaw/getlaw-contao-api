@@ -1,4 +1,5 @@
-<?php declare(strict_types = 1);
+<?php
+
 /**
  * @package     getlawclient
  * @filesource  OnSaveDataListener.php
@@ -6,8 +7,11 @@
  * @author      Patrick Froch <info@easySolutionsIT.de>
  * @see        http://easySolutionsIT.de
  * @copyright   e@sy Solutions IT 2020
- * @license     EULA
+ * @license     LGPL
  */
+
+declare(strict_types=1);
+
 namespace Esit\Getlawclient\Classes\Listener;
 
 use Doctrine\DBAL\Connection;
@@ -21,8 +25,6 @@ use Esit\Getlawclient\Classes\Services\Helper\LogHelper;
  */
 class OnSaveDataListener
 {
-
-
     /**
      * @var \Doctrine\DBAL\Query\QueryBuilder
      */

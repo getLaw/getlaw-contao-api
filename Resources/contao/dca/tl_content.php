@@ -6,7 +6,7 @@
  * @author      Patrick Froch <info@easySolutionsIT.de>
  * @link        http://easySolutionsIT.de
  * @copyright   e@sy Solutions IT 2020
- * @license     EULA
+ * @license     LGPL
  */
 
 /**
@@ -24,12 +24,19 @@ $GLOBALS['TL_DCA'][$table]['config']['onsubmit_callback'][] = [\Esit\Getlawclien
 /**
  * Action
  */
+$confirm = 'Wollen Sie den Text jetzt abrufen?';
+
+if (!empty($GLOBALS['TL_LANG'][$table]['renewConfirm'])) {
+    // fix CTO 4.13, PHP 8.1 Undefined array key "renewConfirm"
+    $confirm = $GLOBALS['TL_LANG'][$table]['renewConfirm'];
+}
+
 $GLOBALS['TL_DCA'][$table]['list']['operations']['renew'] = [
     'label'             => &$GLOBALS['TL_LANG'][$table]['renew'],
     'href'              => 'key=renew',
     'icon'              => 'sync.svg',
-    'button_callback'   => array(\Esit\Getlawclient\Classes\Contao\Callbacks\ButtonManager::class, 'addRenewButton'),
-    'attributes'        => 'onclick="if(!confirm(\'' . $GLOBALS['TL_LANG'][$table]['renewConfirm'] . '\'))return false;Backend.getScrollOffset()"'
+    'button_callback'   => [\Esit\Getlawclient\Classes\Contao\Callbacks\ButtonManager::class, 'addRenewButton'],
+    'attributes'        => 'onclick="if(!confirm(\'' . $confirm . '\'))return false;Backend.getScrollOffset()"'
 ];
 
 /* Palettes */

@@ -1,4 +1,5 @@
-<?php declare(strict_types = 1);
+<?php
+
 /**
  * @package     getlawclient
  * @filesource  ButtonManager.php
@@ -6,8 +7,11 @@
  * @author      Patrick Froch <info@easySolutionsIT.de>
  * @see        http://easySolutionsIT.de
  * @copyright   e@sy Solutions IT 2020
- * @license     EULA
+ * @license     LGPL
  */
+
+declare(strict_types=1);
+
 namespace Esit\Getlawclient\Classes\Contao\Callbacks;
 
 use Contao\Controller;
@@ -22,8 +26,6 @@ use Esit\Getlawclient\Classes\Events\OnManuelRenewEvent;
  */
 class ButtonManager
 {
-
-
     /**
      * Erstellt den Button für das Abrufen des Textes,
      * wenn es sich um ein CTE vom Typ "getlawtext" handelt.

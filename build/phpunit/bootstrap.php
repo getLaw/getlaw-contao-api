@@ -3,7 +3,7 @@
  * @author      pfroch <info@easySolutionsIT.de>
  * @link        http://easySolutionsIT.de
  * @copyright   e@sy Solutions IT 2014
- * @license     EULA
+ * @license     LGPL
  * @package     esitlib
  * @filesource  bootstrap.php
  * @version     2.0.0
@@ -42,7 +42,20 @@ $testCase       = __DIR__ . '/EsitTestCase.php';
  if (is_file($globalComposerAutoloadPath)) {
      // Globalen Composer Autoload einbinden
      include_once($globalComposerAutoloadPath);
+     $autoloadFound = true;
  } else {
+     if (is_file("$buildDir/tools/phpab")) {
+         system("$buildDir/tools/phpab -o $localAutoloadPath $rootDir/Classes " . CONTAO_ROOT . "/vendor");
+
+         if (is_file($localAutoloadPath)) {
+             // Lokalen Autoload einbinden
+             include_once($localAutoloadPath);
+             $autoloadFound = true;
+         }
+     }
+ }
+
+ if (false === $autoloadFound) {
      throw new \Exception("No autoload found");
  }
 

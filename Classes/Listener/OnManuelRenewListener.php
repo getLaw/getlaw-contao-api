@@ -1,4 +1,5 @@
-<?php declare(strict_types = 1);
+<?php
+
 /**
  * @package     getlawclient
  * @filesource  OnManuelRenewListener.php
@@ -6,8 +7,11 @@
  * @author      Patrick Froch <info@easySolutionsIT.de>
  * @see        http://easySolutionsIT.de
  * @copyright   e@sy Solutions IT 2020
- * @license     EULA
+ * @license     LGPL
  */
+
+declare(strict_types=1);
+
 namespace Esit\Getlawclient\Classes\Listener;
 
 use Doctrine\DBAL\Connection;
@@ -23,8 +27,6 @@ use Symfony\Component\EventDispatcher\EventDispatcherInterface;
  */
 class OnManuelRenewListener
 {
-
-
     /**
      * @var QueryBuilder
      */
@@ -52,6 +54,7 @@ class OnManuelRenewListener
     /**
      * Lädt die Daten des CTE.
      * @param OnManuelRenewEvent $event
+     * @throws \Doctrine\DBAL\Exception
      */
     public function loadCte(OnManuelRenewEvent $event): void
     {
@@ -59,8 +62,8 @@ class OnManuelRenewListener
         $table  = $event->getTable();
 
         if (!empty($id) && !empty($table)) {
-            $result = $this->query->select('*')->from($table)->where("id = $id")->execute();
-            $data   = $result->fetch(\PDO::FETCH_ASSOC);
+            $result = $this->query->select('*')->from($table)->where("id = $id")->executeQuery();
+            $data   = $result->fetchAssociative();
 
             if (!empty($data['getlawtextkey'])) {
                 $event->setTextkey($data['getlawtextkey']);
@@ -112,13 +115,13 @@ class OnManuelRenewListener
         $lang   = $event->getLang();
 
         if (isset($data['error']) && false === $data['error']) {
-            $msg = $lang['apiSuccess'] ?: 'Lade des Text erfolgreich';
+            $msg = !empty($lang['apiSuccess']) ? $lang['apiSuccess'] : 'Lade des Text erfolgreich';
             $this->contaoHelper->addCornfirmation($msg);
 
             return;
         }
 
-        $msg = $lang['apiError'] ?: 'Beim Laden des Textes ist ein Fehler aufgetreten';
+        $msg = !empty($lang['apiError']) ? $lang['apiError'] : 'Beim Laden des Textes ist ein Fehler aufgetreten';
         $this->contaoHelper->addError($msg);
     }
 

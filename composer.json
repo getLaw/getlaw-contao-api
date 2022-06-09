@@ -15,13 +15,13 @@
         "email": "info@getLaw.de"
     },
     "require": {
-        "php": "^7.3",
-        "contao/core-bundle": "4.4.* || 4.9.*"
+        "php": "^8.0",
+        "contao/core-bundle": "~4.9||~4.13"
     },
     "require-dev": {
-        "contao/test-case": "^4.4",
+        "contao/test-case": "^4.13",
         "roave/security-advisories": "dev-master",
-        "phpunit/phpunit": "^9.0"
+        "phpunit/phpunit": "^9.5"
     },
     "autoload": {
         "psr-4": {

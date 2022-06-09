@@ -1,4 +1,5 @@
-<?php declare(strict_types = 1);
+<?php
+
 /**
  * @package     getlawclient
  * @filesource  OnHandleDataEvent.php
@@ -6,8 +7,11 @@
  * @author      Patrick Froch <info@easySolutionsIT.de>
  * @see        http://easySolutionsIT.de
  * @copyright   e@sy Solutions IT 2020
- * @license     EULA
+ * @license     LGPL
  */
+
+declare(strict_types=1);
+
 namespace Esit\Getlawclient\Classes\Events;
 
 use Symfony\Contracts\EventDispatcher\Event;
@@ -18,8 +22,6 @@ use Symfony\Contracts\EventDispatcher\Event;
  */
 class OnHandleDataEvent extends Event
 {
-
-
     /**
      * Name des Events
      */

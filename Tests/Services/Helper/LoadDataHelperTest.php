@@ -6,7 +6,7 @@ declare(strict_types=1);
  * @author      Patrick Froch <info@easySolutionsIT.de>
  * @see         http://easySolutionsIT.de
  * @copyright   e@sy Solutions IT 2021
- * @license     EULA
+ * @license     LGPL
  */
 namespace Esit\Getlawclient\Tests\Services\Helper;
 

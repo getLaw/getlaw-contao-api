@@ -1,4 +1,5 @@
-<?php declare(strict_types = 1);
+<?php
+
 /**
  * @package     getlawclient
  * @filesource  Plugin.php
@@ -7,8 +8,11 @@
  * @author      Patrick Froch <info@easySolutionsIT.de>
  * @see        http://easySolutionsIT.de
  * @copyright   e@sy Solutions IT 2020
- * @license     EULA
+ * @license     LGPL
  */
+
+declare(strict_types=1);
+
 namespace Esit\Getlawclient\Classes\Contao\Manager;
 
 use Contao\ManagerPlugin\Bundle\BundlePluginInterface;
@@ -21,8 +25,6 @@ use Contao\ManagerPlugin\Bundle\Parser\ParserInterface;
  */
 class Plugin implements BundlePluginInterface
 {
-
-
     /**
      * @param  ParserInterface                                             $parser
      * @return array|\Contao\ManagerPlugin\Bundle\Config\ConfigInterface[]

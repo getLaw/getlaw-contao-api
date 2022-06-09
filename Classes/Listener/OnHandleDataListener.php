@@ -1,4 +1,5 @@
-<?php declare(strict_types = 1);
+<?php
+
 /**
  * @package     getlawclient
  * @filesource  OnHandleDataListener.php
@@ -6,8 +7,11 @@
  * @author      Patrick Froch <info@easySolutionsIT.de>
  * @see        http://easySolutionsIT.de
  * @copyright   e@sy Solutions IT 2020
- * @license     EULA
+ * @license     LGPL
  */
+
+declare(strict_types=1);
+
 namespace Esit\Getlawclient\Classes\Listener;
 
 use Esit\Getlawclient\Classes\Events\OnHandleDataEvent;
@@ -22,8 +26,6 @@ use Symfony\Contracts\EventDispatcher\EventDispatcherInterface;
  */
 class OnHandleDataListener
 {
-
-
     /**
      * @var JsonHelper
      */

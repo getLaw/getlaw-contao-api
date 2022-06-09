@@ -6,7 +6,7 @@
  * @author      Patrick Froch <info@easySolutionsIT.de>
  * @link        http://easySolutionsIT.de
  * @copyright   e@sy Solutions IT 2020
- * @license     EULA
+ * @license     LGPL
  */
 namespace Esit\Getlawclient\Tests\Listener;
 
@@ -15,8 +15,6 @@ use Esit\Getlawclient\Classes\Events\OnHandleDataEvent;
 use Esit\Getlawclient\Classes\Events\OnManuelRenewEvent;
 use Esit\Getlawclient\Classes\Listener\OnManuelRenewListener;
 use Esit\Getlawclient\Classes\Services\Helper\ContaoHelper;
-use Esit\Getlawclient\Classes\Services\Helper\MessageHelper;
-use Esit\Getlawclient\Classes\Services\Helper\RedirectHelper;
 use Esit\Getlawclient\EsitTestCase;
 use Symfony\Component\EventDispatcher\EventDispatcher;
 

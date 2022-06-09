@@ -3,10 +3,8 @@
  * @author      pfroch <info@easySolutionsIT.de>
  * @link        http://easySolutionsIT.de
  * @copyright   e@sy Solutions IT 2014
- * @license     EULA
+ * @license     LGPL
  * @package     getlawclient
- * @filesource  EsitTestCase.php
- * @version     2.0.0
  * @since       06.03.14 - 16:47
  */
 namespace Esit\Getlawclient;
@@ -15,6 +13,7 @@ use Contao\TestCase\ContaoTestCase;
 use Doctrine\DBAL\Connection;
 use Doctrine\DBAL\Driver\Statement;
 use Doctrine\DBAL\Query\QueryBuilder;
+use Doctrine\DBAL\Result;
 use PHPUnit\Framework\MockObject\MockObject;
 
 /**
@@ -204,22 +203,18 @@ class EsitTestCase extends ContaoTestCase
      */
     protected function getQueryBuilderMock(array $return = []): MockObject
     {
-        $result = $this->getMockForAbstractClass(Statement::class);
+        $result = $this->getMockBuilder(Result::class)->disableOriginalConstructor()->getMock();
 
-        $result->method('fetch')
-               ->with(\PDO::FETCH_ASSOC)
-               ->willReturn($return);
+        $result->method('fetchAssociative')->willReturn($return);
 
-        $result->method('fetchAll')
-               ->with(\PDO::FETCH_ASSOC)
-               ->willReturn($return);
+        $result->method('fetchAllAssociative')->willReturn($return);
 
         $query = $this->getMockBuilder(QueryBuilder::class)
                       ->disableOriginalConstructor()
-                      ->setMethods(get_class_methods(QueryBuilder::class))
+                      ->onlyMethods(get_class_methods(QueryBuilder::class))
                       ->getMock();
 
-        $query->method('execute')
+        $query->method('executeQuery')
               ->willReturn($result);
 
         return $query;

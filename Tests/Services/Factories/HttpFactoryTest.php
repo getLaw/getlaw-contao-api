@@ -7,7 +7,7 @@ declare(strict_types=1);
  * @author      Patrick Froch <info@easySolutionsIT.de>
  * @link        http://easySolutionsIT.de
  * @copyright   e@sy Solutions IT 2020
- * @license     EULA
+ * @license     LGPL
  */
 namespace Esit\Getlawclient\Tests\Services\Factories;
 

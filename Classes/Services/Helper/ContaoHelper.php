@@ -1,4 +1,5 @@
-<?php declare(strict_types = 1);
+<?php
+
 /**
  * @package     getlawclient
  * @filesource  ContaoHelper.php
@@ -6,8 +7,11 @@
  * @author      Patrick Froch <info@easySolutionsIT.de>
  * @see        http://easySolutionsIT.de
  * @copyright   e@sy Solutions IT 2020
- * @license     EULA
+ * @license     LGPL
  */
+
+declare(strict_types=1);
+
 namespace Esit\Getlawclient\Classes\Services\Helper;
 
 use Contao\Controller;
@@ -19,11 +23,10 @@ use Contao\Message;
  */
 class ContaoHelper
 {
-
-
     /**
      * Zeigt dem Benutzer eine Fehlermeldung an.
      * @param string $msg
+     * @codeCoverageIgnore
      */
     public function addError(string $msg): void
     {
@@ -34,6 +37,7 @@ class ContaoHelper
     /**
      * Zeigt dem Benutzer eine Erfolgsmeldung an.
      * @param string $msg
+     * @codeCoverageIgnore
      */
     public function addCornfirmation(string $msg): void
     {
@@ -44,6 +48,7 @@ class ContaoHelper
     /**
      * Leitet zur übergebenen Url um.
      * @param string $url
+     * @codeCoverageIgnore
      */
     public function redirect(string $url): void
     {

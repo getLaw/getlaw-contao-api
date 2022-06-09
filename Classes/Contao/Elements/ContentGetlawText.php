@@ -1,5 +1,5 @@
 <?php
-declare(strict_types = 1);
+
 /**
  * @package     getlawclient
  * @filesource  ContentGetlawText.php
@@ -7,8 +7,11 @@ declare(strict_types = 1);
  * @author      Patrick Froch <info@easySolutionsIT.de>
  * @see        http://easySolutionsIT.de
  * @copyright   e@sy Solutions IT 2020
- * @license     EULA
+ * @license     LGPL
  */
+
+declare(strict_types=1);
+
 namespace Esit\Getlawclient\Classes\Contao\Elements;
 
 use Contao\System;
@@ -20,8 +23,6 @@ use Esit\Getlawclient\Classes\Services\Helper\LoadDataHelper;
  */
 class ContentGetlawText extends \ContentElement
 {
-
-
     /**
      * Template
      * @var string

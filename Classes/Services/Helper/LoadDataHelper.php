@@ -1,13 +1,16 @@
 <?php
-declare(strict_types = 1);
+
 /**
  * @package     getlawclient
  * @since       10.08.2021 - 17:39
  * @author      Patrick Froch <info@easySolutionsIT.de>
  * @see         http://easySolutionsIT.de
  * @copyright   e@sy Solutions IT 2021
- * @license     EULA
+ * @license     LGPL
  */
+
+declare(strict_types=1);
+
 namespace Esit\Getlawclient\Classes\Services\Helper;
 
 use Esit\Getlawclient\Classes\Events\OnHandleDataEvent;
@@ -15,8 +18,6 @@ use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
 class LoadDataHelper
 {
-
-
     /**
      * Template
      * @var string

@@ -4,13 +4,11 @@
 #title:         runtests.sh
 #description:   Führt die Tests der Softwate aus
 #author:        pfroch <patrick.froch@easySolutionsIT.de>
-#date:          20180819
-#version:       1.0.0
+#date:          20220503
+#version:       1.1.0
 #usage:         runtests.sh
 # =============================================================================
 #
-
-BUILD_FULLPACKAGE="false";
 
 
 ## Ausgabe
@@ -40,6 +38,11 @@ function myerror() {
         echo -e "\e[1;91m--------------------------------------------------------------------------------\e[0m"
     else
         echo -e "\e[0;101m\u2717 ${1}\e[0m"
+    fi
+
+    if [ "${EXIT_ON_ERORR}" == "TRUE" ]
+    then
+        exit 124;
     fi
 }
 
@@ -80,124 +83,43 @@ done
 
 
 ## Variablen
+EXIT_ON_ERORR="TRUE"
 error=0
 tmperr=0
 configFolder='./build'
 toolFolder="${configFolder}/tools"
 classesFolder='./Classes'
+codeStandard='PSR12'
 
-
-## phpcf
-if [ -f ${toolFolder}/phpcf ]
+## Eintragung der Abhängigkeiten prüfen
+if [ -f /home/pfroch/bin/checkdependencies ]
 then
-    myecho "Prüfe Kompatibilität zu PHP 7.0"
-    if [ "${VERBOSE}" == "TRUE" ]
-    then
-        ${toolFolder}/phpcf -t 7.0 ${classesFolder}
-        tmperr=$?
-    else
-        ${toolFolder}/phpcf -t 7.0 ${classesFolder} &>/dev/null
-        tmperr=$?
-    fi
+    /home/pfroch/bin/checkdependencies
+    tmperr=$?
 
-    if [ ${tmperr} -ne 0 ]
-    then
-        error=${tmperr}
-        myerror "Es ist ein Fehler ausgetreten [${tmperr}]"
-    else
-       myshortecho "Prüfung Kompatibilität zu PHP 7.0 erfolgreich"
-    fi
-
-    myecho "Prüfe Kompatibilität zu PHP 7.1"
-    if [ "${VERBOSE}" == "TRUE" ]
-    then
-        ${toolFolder}/phpcf -t 7.1 ${classesFolder}
-        tmperr=$?
-    else
-        ${toolFolder}/phpcf -t 7.1 ${classesFolder} 1>/dev/null
-        tmperr=$?
-    fi
-
-    if [ ${tmperr} -ne 0 ]
-    then
-        error=${tmperr}
-        myerror "Es ist ein Fehler ausgetreten [${tmperr}]"
-    else
-       myshortecho "Prüfung Kompatibilität zu PHP 7.1 erfolgreich"
-    fi
-
-    myecho "Prüfe Kompatibilität zu PHP 7.2"
-    if [ "${VERBOSE}" == "TRUE" ]
-    then
-        ${toolFolder}/phpcf -t 7.2 ${classesFolder}
-        tmperr=$?
-    else
-        ${toolFolder}/phpcf -t 7.2 ${classesFolder} 1>/dev/null
-        tmperr=$?
-    fi
-
-    if [ ${tmperr} -ne 0 ]
-    then
-        error=${tmperr}
-        myerror "Es ist ein Fehler ausgetreten [${tmperr}]"
-    else
-       myshortecho "Prüfung Kompatibilität zu PHP 7.2 erfolgreich"
-    fi
-else
-    myinfo "Prüfen der Kompatibilität ausgelassen. PhpCodeFixer nicht vorhanden!"
+    if [ ${tmperr} -gt 1 ]
+        then
+            error=${tmperr}
+            myerror "Es ist ein Fehler ausgetreten [${tmperr}]"
+        else
+           myshortecho "Alle Abhängigkeiten vorhanden"
+        fi
 fi
 
 
-## phpcpd
-if [ -f ${toolFolder}/phpcpd ]
+## phpcbf
+if [ -f ${toolFolder}/phpcbf ]
 then
-    myecho "Prüfe auf doppelten Code"
+    myecho "Verbessern des Code-Styles"
     if [ "${VERBOSE}" == "TRUE" ]
     then
-        ${toolFolder}/phpcpd ${classesFolder}
+        ${toolFolder}/phpcbf --colors --standard=${codeStandard} ${classesFolder}
         tmperr=$?
     else
-        ${toolFolder}/phpcpd -q ${classesFolder}
-        tmperr=$?
-    fi
-
-    if [ ${tmperr} -ne 0 ]
-    then
-        error=${tmperr}
-        myerror "Bei der Prüfung auf doppelten Code ist ein Fehler ausgetreten [${tmperr}]"
-    else
-       myshortecho "Prüfung auf doppelten Code erfolgreich"
+        ${toolFolder}/phpcbf --colors --standard=${codeStandard} ${classesFolder} &>/dev/null
     fi
 else
-    myinfo "Prüfen auf doppelten Code ausgelassen. PhpCopyAndPasteDetector nicht vorhanden!"
-fi
-
-## php-cs-fixer
-#
-# pfroch - 02.01.2019: doesn't run on php 7.3.x, we have to wait, then:
-# REMOVE: PHP_CS_FIXER_IGNORE_ENV=1
-#
-if [ -f ${toolFolder}/php-cs-fixer ]
-then
-    myecho "Führe automatische Korrektur der Code-Standards mit Php-cs-fixer durch"
-    if [ "${VERBOSE}" == "TRUE" ]
-    then
-        PHP_CS_FIXER_IGNORE_ENV=1 ${toolFolder}/php-cs-fixer --config=${configFolder}/php_cs.dist.php fix
-        tmperr=$?
-    else
-        PHP_CS_FIXER_IGNORE_ENV=1 ${toolFolder}/php-cs-fixer -q --config=${configFolder}/php_cs.dist.php fix
-        tmperr=$?
-    fi
-
-    if [ ${tmperr} -ne 0 ]
-    then
-       error=${tmperr}
-       myerror "Es ist ein Fehler ausgetreten [${tmperr}]"
-    else
-       myshortecho "Automatische Korrektur der Code-Standards mit Php-cs-fixer erfolgreich"
-    fi
-else
-   myinfo "Automatische Korrektur der Code-Standards ausgelassen. Php-cs-fixer nicht vorhanden!"
+    myinfo "Verbessern des Code-Styles ausgelassen. PHP Code Beautifier and Fixer (phpcbf) nicht vorhanden!"
 fi
 
 
@@ -207,10 +129,10 @@ then
     myecho "Führe statische Code-Analyse mit PHP Codesniffer durch"
     if [ "${VERBOSE}" == "TRUE" ]
     then
-        ${toolFolder}/phpcs --colors --standard=PSR2 ${classesFolder}
+        ${toolFolder}/phpcs --colors --standard=${codeStandard} ${classesFolder}
         tmperr=$?
     else
-        ${toolFolder}/phpcs -q --colors --standard=PSR2 ${classesFolder}
+        ${toolFolder}/phpcs -q --standard=${codeStandard} ${classesFolder}
         tmperr=$?
     fi
 
@@ -225,14 +147,14 @@ else
     myinfo "Statische Code-Analyse ausgelassen. PHP Codesniffer nicht vorhanden!"
 fi
 
-echo
 
 ## PHPUnit
-if [ -f ${toolFolder}/phpunit ]
+if [ -f ../../../vendor/bin/phpunit ] && [ -d ./Tests ]
 then
-    # PHPUnit als Phar in build installiert
-    myecho "Führe UnitTests mit Phar PHPUnit durch"
-    ${toolFolder}/phpunit --configuration ${configFolder}/phpunit/phpunit.xml.dist --testdox
+    # PHPUnit gobal mit composer installiert
+    echo
+    myecho "Führe UnitTests mit globalem PHPUnit durch"
+    XDEBUG_MODE=coverage ../../../vendor/bin/phpunit --configuration ${configFolder}/phpunit/phpunit.xml.dist --testdox
     tmperr=$?
 
     if [ ${tmperr} -ne 0 ]
@@ -241,22 +163,10 @@ then
         myerror "Es ist ein Fehler ausgetreten [${tmperr}]"
     fi
 else
-    if [ -f ../../../vendor/bin/phpunit ]
-    then
-        # PHPUnit gobal mit composer installiert
-        myecho "Führe UnitTests mit globalem PHPUnit durch"
-        ../../../vendor/bin/phpunit --configuration ${configFolder}/phpunit/phpunit.xml.dist --testdox
-        tmperr=$?
-
-        if [ ${tmperr} -ne 0 ]
-        then
-            error=${tmperr}
-            myerror "Es ist ein Fehler ausgetreten [${tmperr}]"
-        fi
-    else
-        myinfo "Ausführen der UnitTests ausgelassen. PHPUnit nicht vorhanden!"
-    fi
+    myinfo "Ausführen der UnitTests ausgelassen. PHPUnit nicht vorhanden!"
 fi
+
+echo
 
 
 ## Zusammenfassung
@@ -271,7 +181,9 @@ then
     echo
     exit 127
 else
+
     myecho ">>>>>>>>>>>>>>>>>>>>>>> Es sind keine Fehler aufgetreten <<<<<<<<<<<<<<<<<<<<<<<"
     echo
     exit 0
 fi
+
