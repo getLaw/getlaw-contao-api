@@ -16,7 +16,6 @@ namespace Esit\Getlawclient\Classes\Listener;
 
 use Esit\Getlawclient\Classes\Events\OnHandleDataEvent;
 use Esit\Getlawclient\Classes\Events\OnLoadDataEvent;
-use Esit\Getlawclient\Classes\Events\OnManualRenewEvent;
 use Esit\Getlawclient\Classes\Events\OnSaveDataEvent;
 use Esit\Getlawclient\Classes\Services\Helper\JsonHelper;
 use Esit\Getlawclient\Classes\Services\Helper\MessageHelper;

@@ -32,11 +32,11 @@ services:
 
     Esit\Getlawclient\Classes\Listener\OnHandleMessageListener:
         tags:
-            - {name: kernel.event_listener, event: Esit\Getlawclient\Classes\Events\OnManualRenewEvent, method: handleKeyEmpty, priority: 8192}
-            - {name: kernel.event_listener, event: Esit\Getlawclient\Classes\Events\OnManualRenewEvent, method: handleKeyTooShort, priority: 7168}
-            - {name: kernel.event_listener, event: Esit\Getlawclient\Classes\Events\OnManualRenewEvent, method: handleKeyTooLong, priority: 6144}
-            - {name: kernel.event_listener, event: Esit\Getlawclient\Classes\Events\OnManualRenewEvent, method: handleWrongChar, priority: 5120}
-            - {name: kernel.event_listener, event: Esit\Getlawclient\Classes\Events\OnManualRenewEvent, method: handleWrongKey, priority: 4096}
-            - {name: kernel.event_listener, event: Esit\Getlawclient\Classes\Events\OnManualRenewEvent, method: handleApiError, priority: 3072}
-            - {name: kernel.event_listener, event: Esit\Getlawclient\Classes\Events\OnManualRenewEvent, method: setSuccessMessage, priority: 2048}
-            - {name: kernel.event_listener, event: Esit\Getlawclient\Classes\Events\OnManualRenewEvent, method: setErrorMessage, priority: 1024}
+            - {name: kernel.event_listener, event: Esit\Getlawclient\Classes\Events\OnHandleMessageEvent, method: handleKeyEmpty, priority: 8192}
+            - {name: kernel.event_listener, event: Esit\Getlawclient\Classes\Events\OnHandleMessageEvent, method: handleKeyTooShort, priority: 7168}
+            - {name: kernel.event_listener, event: Esit\Getlawclient\Classes\Events\OnHandleMessageEvent, method: handleKeyTooLong, priority: 6144}
+            - {name: kernel.event_listener, event: Esit\Getlawclient\Classes\Events\OnHandleMessageEvent, method: handleWrongChar, priority: 5120}
+            - {name: kernel.event_listener, event: Esit\Getlawclient\Classes\Events\OnHandleMessageEvent, method: handleWrongKey, priority: 4096}
+            - {name: kernel.event_listener, event: Esit\Getlawclient\Classes\Events\OnHandleMessageEvent, method: handleApiError, priority: 3072}
+            - {name: kernel.event_listener, event: Esit\Getlawclient\Classes\Events\OnHandleMessageEvent, method: setSuccessMessage, priority: 2048}
+            - {name: kernel.event_listener, event: Esit\Getlawclient\Classes\Events\OnHandleMessageEvent, method: setErrorMessage, priority: 1024}

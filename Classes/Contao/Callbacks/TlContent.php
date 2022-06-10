@@ -13,6 +13,7 @@ declare(strict_types=1);
 
 namespace Esit\Getlawclient\Classes\Contao\Callbacks;
 
+use Contao\DataContainer;
 use Contao\System;
 use Esit\Getlawclient\Classes\Services\Helper\LoadDataHelper;
 
@@ -47,5 +48,22 @@ class TlContent
 
             $this->helper->loadData($textkey, $id, $getlawdata, $savedon, $disableautorenew);
         }
+    }
+
+
+    /**
+     * Entfernt den Speichern und schließen-Button, damit Fehlermelungen der API angezeigt werden können.
+     * @param array         $buttons
+     * @param DataContainer $dc
+     * @return array
+     */
+    public function removeSaveAndExit(array $buttons, DataContainer $dc): array
+    {
+        // Remove the "Save and close" button
+        if ('getlawtext' === $dc->activeRecord->type) {
+            return ['save' => $buttons['save']];
+        }
+
+        return $buttons;
     }
 }
