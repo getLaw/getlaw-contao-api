@@ -99,7 +99,7 @@ class LoadDataHelper
         $event->setDisableRenew($getlawdisableautorenew);
         $event->setManualRenew(false);
 
-        $this->di->dispatch($event, $event::NAME);
+        $this->di->dispatch($event);
 
         return $event->getContent();
     }

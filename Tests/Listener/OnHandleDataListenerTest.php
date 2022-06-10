@@ -15,6 +15,7 @@ use Esit\Getlawclient\Classes\Events\OnLoadDataEvent;
 use Esit\Getlawclient\Classes\Events\OnSaveDataEvent;
 use Esit\Getlawclient\Classes\Listener\OnHandleDataListener;
 use Esit\Getlawclient\Classes\Services\Helper\JsonHelper;
+use Esit\Getlawclient\Classes\Services\Helper\MessageHelper;
 use Esit\Getlawclient\EsitTestCase;
 use Symfony\Contracts\EventDispatcher\EventDispatcherInterface;
 
@@ -26,15 +27,24 @@ class OnHandleDataListenerTest extends EsitTestCase
 {
 
 
+    /**
+     * @var JsonHelper|\PHPUnit\Framework\MockObject\MockObject
+     */
     protected $jsonHelper;
+
+    protected $messageHelper;
 
 
     protected function setUp(): void
     {
-        $this->jsonHelper   = $this->getMockBuilder(JsonHelper::class)
-                                   ->disableOriginalConstructor()
-                                   ->onlyMethods(['decode'])
-                                   ->getMock();
+        $this->jsonHelper       = $this->getMockBuilder(JsonHelper::class)
+                                       ->disableOriginalConstructor()
+                                       ->onlyMethods(['decode'])
+                                       ->getMock();
+
+        $this->messageHelper    = $this->getMockBuilder(MessageHelper::class)
+                                       ->disableOriginalConstructor()
+                                       ->getMock();
     }
 
 
@@ -42,7 +52,7 @@ class OnHandleDataListenerTest extends EsitTestCase
     {
         $this->jsonHelper->expects(self::never())->method('decode');
         $event      = new OnHandleDataEvent();
-        $listener   = new OnHandleDataListener($this->jsonHelper);
+        $listener   = new OnHandleDataListener($this->jsonHelper, $this->messageHelper);
         $listener->handleDbDataString($event);
     }
 
@@ -52,7 +62,7 @@ class OnHandleDataListenerTest extends EsitTestCase
         $this->jsonHelper->expects(self::once())->method('decode')->with('dbDataString')->willReturn(['testData']);
         $event      = new OnHandleDataEvent();
         $event->setDataStingFromDb('dbDataString');
-        $listener   = new OnHandleDataListener($this->jsonHelper);
+        $listener   = new OnHandleDataListener($this->jsonHelper, $this->messageHelper);
         $listener->handleDbDataString($event);
         self::assertSame(['testData'], $event->getDataFromDb());
         self::assertEmpty($event->getContent());
@@ -65,7 +75,7 @@ class OnHandleDataListenerTest extends EsitTestCase
         $this->jsonHelper->expects(self::once())->method('decode')->with('dbDataString')->willReturn($data);
         $event      = new OnHandleDataEvent();
         $event->setDataStingFromDb('dbDataString');
-        $listener   = new OnHandleDataListener($this->jsonHelper);
+        $listener   = new OnHandleDataListener($this->jsonHelper, $this->messageHelper);
         $listener->handleDbDataString($event);
         self::assertSame($data, $event->getDataFromDb());
         self::assertSame('TestContent', $event->getContent());
@@ -78,7 +88,7 @@ class OnHandleDataListenerTest extends EsitTestCase
         $eventDispatcher->expects(self::never())->method('dispatch');
         $event              = new OnHandleDataEvent();
         $event->setSavedOn(\time());
-        $listener           = new OnHandleDataListener($this->jsonHelper);
+        $listener           = new OnHandleDataListener($this->jsonHelper, $this->messageHelper);
         $listener->loadData($event, '', $eventDispatcher);
     }
 
@@ -90,7 +100,7 @@ class OnHandleDataListenerTest extends EsitTestCase
         $event              = new OnHandleDataEvent();
         $event->setDisableRenew(true);
         $event->setSavedOn(\time()- (48 * 3600));
-        $listener           = new OnHandleDataListener($this->jsonHelper);
+        $listener           = new OnHandleDataListener($this->jsonHelper, $this->messageHelper);
         $listener->loadData($event, '', $eventDispatcher);
     }
 
@@ -109,13 +119,12 @@ class OnHandleDataListenerTest extends EsitTestCase
                     $event->setData(['testData']);
 
                     return true;
-                }),
-                self::equalTo(OnLoadDataEvent::NAME)
+                })
             );
 
         $event              = new OnHandleDataEvent();
         $event->setSavedOn(\time()- (48 * 3600));
-        $listener           = new OnHandleDataListener($this->jsonHelper);
+        $listener           = new OnHandleDataListener($this->jsonHelper, $this->messageHelper);
         $listener->loadData($event, '', $eventDispatcher);
         self::assertSame(['testData'], $event->getDataFromApi());
     }
@@ -135,13 +144,12 @@ class OnHandleDataListenerTest extends EsitTestCase
                     $event->setData(['testData']);
 
                     return true;
-                }),
-                self::equalTo(OnLoadDataEvent::NAME)
+                })
             );
 
         $event              = new OnHandleDataEvent();
         $event->setManualRenew(true);
-        $listener           = new OnHandleDataListener($this->jsonHelper);
+        $listener           = new OnHandleDataListener($this->jsonHelper, $this->messageHelper);
         $listener->loadData($event, '', $eventDispatcher);
         self::assertSame(['testData'], $event->getDataFromApi());
     }
@@ -163,8 +171,7 @@ class OnHandleDataListenerTest extends EsitTestCase
                     $event->setData(['testData']);
 
                     return true;
-                }),
-                self::equalTo(OnLoadDataEvent::NAME)
+                })
             );
 
         $event              = new OnHandleDataEvent();
@@ -173,7 +180,7 @@ class OnHandleDataListenerTest extends EsitTestCase
         $event->setGetlawServer('https://example.org/');
         $event->setGetlawHeader('X-test-Header');
         $event->setApiVersion('12');
-        $listener           = new OnHandleDataListener($this->jsonHelper);
+        $listener           = new OnHandleDataListener($this->jsonHelper, $this->messageHelper);
         $listener->loadData($event, '', $eventDispatcher);
         self::assertSame(['testData'], $event->getDataFromApi());
     }
@@ -186,7 +193,7 @@ class OnHandleDataListenerTest extends EsitTestCase
         $event              = new OnHandleDataEvent();
         $event->setDataFromApi(['errorNOTset'=>false, 'content'=>'test']);
         $event->setCteId(12);
-        $listener           = new OnHandleDataListener($this->jsonHelper);
+        $listener           = new OnHandleDataListener($this->jsonHelper, $this->messageHelper);
         $listener->saveData($event, '', $eventDispatcher);
     }
 
@@ -198,7 +205,7 @@ class OnHandleDataListenerTest extends EsitTestCase
         $event              = new OnHandleDataEvent();
         $event->setDataFromApi(['error'=>true, 'content'=>'test']);
         $event->setCteId(12);
-        $listener           = new OnHandleDataListener($this->jsonHelper);
+        $listener           = new OnHandleDataListener($this->jsonHelper, $this->messageHelper);
         $listener->saveData($event, '', $eventDispatcher);
     }
 
@@ -210,7 +217,7 @@ class OnHandleDataListenerTest extends EsitTestCase
         $event              = new OnHandleDataEvent();
         $event->setDataFromApi(['error'=>false, 'content'=>'']);
         $event->setCteId(12);
-        $listener           = new OnHandleDataListener($this->jsonHelper);
+        $listener           = new OnHandleDataListener($this->jsonHelper, $this->messageHelper);
         $listener->saveData($event, '', $eventDispatcher);
     }
 
@@ -222,7 +229,7 @@ class OnHandleDataListenerTest extends EsitTestCase
         $event              = new OnHandleDataEvent();
         $event->setDataFromApi(['error'=>false, 'contentNOTset'=>'test']);
         $event->setCteId(12);
-        $listener           = new OnHandleDataListener($this->jsonHelper);
+        $listener           = new OnHandleDataListener($this->jsonHelper, $this->messageHelper);
         $listener->saveData($event, '', $eventDispatcher);
     }
 
@@ -233,7 +240,7 @@ class OnHandleDataListenerTest extends EsitTestCase
         $eventDispatcher->expects(self::never())->method('dispatch');
         $event              = new OnHandleDataEvent();
         $event->setDataFromApi(['error'=>false, 'content'=>'test']);
-        $listener           = new OnHandleDataListener($this->jsonHelper);
+        $listener           = new OnHandleDataListener($this->jsonHelper, $this->messageHelper);
         $listener->saveData($event, '', $eventDispatcher);
     }
 
@@ -258,7 +265,7 @@ class OnHandleDataListenerTest extends EsitTestCase
         $event              = new OnHandleDataEvent();
         $event->setDataFromApi(['error'=>false, 'content'=>'testcontent']);
         $event->setCteId(12);
-        $listener           = new OnHandleDataListener($this->jsonHelper);
+        $listener           = new OnHandleDataListener($this->jsonHelper, $this->messageHelper);
         $listener->saveData($event, '', $eventDispatcher);
 
         self::assertSame('testcontent', $event->getContent());

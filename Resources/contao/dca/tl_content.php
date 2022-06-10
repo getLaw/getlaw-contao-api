@@ -47,7 +47,7 @@ $GLOBALS['TL_DCA'][$table]['fields']['getlawtextkey'] = [
     'label'                 => &$GLOBALS['TL_LANG'][$table]['getlawtextkey'],
     'exclude'               => true,
     'inputType'             => 'text',
-    'eval'                  => ['mandatory'=>true, 'maxlength'=>128, 'tl_class'=>'long'],
+    'eval'                  => ['mandatory'=>true, 'maxlength'=>128, 'tl_class'=>'long', 'rgxp'=>\Esit\Getlawclient\Classes\Contao\Hooks\RgxpHandler::RGXP],
     'sql'                   => "varchar(128) NOT NULL default ''"
 ];
 

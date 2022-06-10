@@ -40,7 +40,6 @@ class OnSaveDataListener
     /**
      * OnSaveDataListener constructor.
      * @param Connection $connection
-     * @param LogHelper  $logger
      * @param JsonHelper $jsonHelper
      */
     public function __construct(Connection $connection, JsonHelper $jsonHelper)

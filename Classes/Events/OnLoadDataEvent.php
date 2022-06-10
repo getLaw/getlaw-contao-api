@@ -23,12 +23,6 @@ use Symfony\Contracts\EventDispatcher\Event;
 class OnLoadDataEvent extends Event
 {
     /**
-     * Name des Events
-     */
-    public const NAME = 'getlaw.on.load.data.event';
-
-
-    /**
      * Url der API
      * @var string
      */

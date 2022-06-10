@@ -23,12 +23,6 @@ use Symfony\Contracts\EventDispatcher\Event;
 class OnHandleDataEvent extends Event
 {
     /**
-     * Name des Events
-     */
-    public const NAME = 'getlaw.on.handle.data.event';
-
-
-    /**
      * Id des Inhaltselements
      * @var int
      */
@@ -111,6 +105,13 @@ class OnHandleDataEvent extends Event
      * @var string
      */
     protected $content = '';
+
+
+    /**
+     * Language Array
+     * @var array
+     */
+    protected $lang = [];
 
 
     /**
@@ -326,5 +327,23 @@ class OnHandleDataEvent extends Event
     public function setContent(string $content): void
     {
         $this->content = $content;
+    }
+
+
+    /**
+     * @return array
+     */
+    public function getLang(): array
+    {
+        return $this->lang;
+    }
+
+
+    /**
+     * @param array $lang
+     */
+    public function setLang(array $lang): void
+    {
+        $this->lang = $lang;
     }
 }

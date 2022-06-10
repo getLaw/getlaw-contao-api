@@ -45,8 +45,7 @@ class LoadDataHelperTest extends EsitTestCase
                     self::assertEquals(false, $event->getManualRenew());
 
                     return true;
-                }),
-                $this->equalTo('getlaw.on.handle.data.event')
+                })
             );
 
         $helper = new LoadDataHelper($eventDispatcher);
@@ -85,8 +84,7 @@ class LoadDataHelperTest extends EsitTestCase
                     self::assertEquals(false, $event->getManualRenew());
 
                     return true;
-                }),
-                $this->equalTo('getlaw.on.handle.data.event')
+                })
             );
 
         $helper = new LoadDataHelper($eventDispatcher);

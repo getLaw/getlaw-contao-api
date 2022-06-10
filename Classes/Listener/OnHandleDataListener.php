@@ -16,8 +16,10 @@ namespace Esit\Getlawclient\Classes\Listener;
 
 use Esit\Getlawclient\Classes\Events\OnHandleDataEvent;
 use Esit\Getlawclient\Classes\Events\OnLoadDataEvent;
+use Esit\Getlawclient\Classes\Events\OnManualRenewEvent;
 use Esit\Getlawclient\Classes\Events\OnSaveDataEvent;
 use Esit\Getlawclient\Classes\Services\Helper\JsonHelper;
+use Esit\Getlawclient\Classes\Services\Helper\MessageHelper;
 use Symfony\Contracts\EventDispatcher\EventDispatcherInterface;
 
 /**
@@ -33,12 +35,19 @@ class OnHandleDataListener
 
 
     /**
-     * OnHandleDataListener constructor.
-     * @param JsonHelper $jsonHelper
+     * @var MessageHelper
      */
-    public function __construct(JsonHelper $jsonHelper)
+    protected $messageHelper;
+
+
+    /**
+     * @param JsonHelper    $jsonHelper
+     * @param MessageHelper $messageHelper
+     */
+    public function __construct(JsonHelper $jsonHelper, MessageHelper $messageHelper)
     {
-        $this->jsonHelper = $jsonHelper;
+        $this->jsonHelper       = $jsonHelper;
+        $this->messageHelper    = $messageHelper;
     }
 
 
@@ -82,6 +91,7 @@ class OnHandleDataListener
         $version        = $event->getApiVersion();
         $disable        = $event->getDisableRenew();
         $manual         = $event->getManualRenew();
+        $lang           = $event->getLang();
 
         if (true === $manual || (false === $disable && $savedon < (\time() - (24 * 3600)))) {
             $loadEvent = new OnLoadDataEvent();
@@ -90,9 +100,11 @@ class OnHandleDataListener
             $loadEvent->setGetlawHeader($header);
             $loadEvent->setApiVersion($version);
 
-            $di->dispatch($loadEvent, $loadEvent::NAME);
+            $di->dispatch($loadEvent);
 
-            $event->setDataFromApi($loadEvent->getData());
+            $data = $loadEvent->getData();
+            $this->messageHelper->generateMessage($data, $lang, $textkey);
+            $event->setDataFromApi($data);
         }
     }
 

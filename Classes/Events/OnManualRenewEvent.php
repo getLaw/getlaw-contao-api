@@ -20,14 +20,8 @@ use Symfony\Contracts\EventDispatcher\Event;
  * Class OnManuelRenewEvent
  * @package Esit\Getlawclient\Classes\Events
  */
-class OnManuelRenewEvent extends Event
+class OnManualRenewEvent extends Event
 {
-    /**
-     * Name des Events
-     */
-    public const NAME = 'getlaw.on.manual.renew.event';
-
-
     /**
      * Spracharray $GLOBALS['TL_LANG']['MSC']
      * @var array

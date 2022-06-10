@@ -1,23 +1,28 @@
 services:
+    _defaults:
+        autowire: true
+        autoconfigure: true
+
 
     # Factories
-    esit_getlawclient.services.factories.http_factory:
-        class: Esit\Getlawclient\Classes\Services\Factories\HttpFactory
+    Esit\Getlawclient\Classes\Services\Factories\HttpFactory:
+
 
     # Helper
-    esit_getlawclient.services.helper.contao_helper:
+    Esit\Getlawclient\Classes\Services\Helper\ContaoHelper:
         class: Esit\Getlawclient\Classes\Services\Helper\ContaoHelper
 
-    esit_getlawclient.services.helper.json_helper:
-        class: Esit\Getlawclient\Classes\Services\Helper\JsonHelper
-        arguments: ['@esit_getlawclient.services.helper.log_helper']
+    Esit\Getlawclient\Classes\Services\Helper\JsonHelper:
         public: true
 
-    esit_getlawclient.services.helper.load_data_helper:
-        class: Esit\Getlawclient\Classes\Services\Helper\LoadDataHelper
-        arguments: [ '@event_dispatcher']
+    Esit\Getlawclient\Classes\Services\Helper\LoadDataHelper:
         public: true
 
-    esit_getlawclient.services.helper.log_helper:
-        class: Esit\Getlawclient\Classes\Services\Helper\LogHelper
-        arguments: ['@monolog.logger.contao']
+    Esit\Getlawclient\Classes\Services\Helper\LogHelper:
+
+    Esit\Getlawclient\Classes\Services\Helper\MessageHelper:
+
+
+    # Hooks
+    Esit\Getlawclient\Classes\Contao\Hooks\RgxpHandler:
+        public: true

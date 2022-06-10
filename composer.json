@@ -15,8 +15,8 @@
         "email": "info@getLaw.de"
     },
     "require": {
-        "php": "^8.0",
-        "contao/core-bundle": "~4.9||~4.13"
+        "php": "~8.0",
+        "contao/core-bundle": "^4.13"
     },
     "require-dev": {
         "contao/test-case": "^4.13",

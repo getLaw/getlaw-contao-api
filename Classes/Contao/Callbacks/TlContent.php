@@ -26,7 +26,7 @@ class TlContent
 
     public function __construct()
     {
-        $this->helper = System::getContainer()->get('esit_getlawclient.services.helper.load_data_helper');
+        $this->helper = System::getContainer()->get(LoadDataHelper::class);
     }
 
 
@@ -42,7 +42,7 @@ class TlContent
             $textkey            = (string)$row->getlawtextkey;
             $id                 = (int)$row->id;
             $getlawdata         = (string)$row->getlawdata;
-            $savedon            = (int)$row->savedon;
+            $savedon            = 0; // Beim Speichern immer neu laden
             $disableautorenew   = (bool)$row->getlawdisableautorenew;
 
             $this->helper->loadData($textkey, $id, $getlawdata, $savedon, $disableautorenew);

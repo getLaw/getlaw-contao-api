@@ -18,7 +18,7 @@ use Contao\Controller;
 use Contao\Image;
 use Contao\StringUtil;
 use Contao\System;
-use Esit\Getlawclient\Classes\Events\OnManuelRenewEvent;
+use Esit\Getlawclient\Classes\Events\OnManualRenewEvent;
 
 /**
  * Class ButtonManager
@@ -94,7 +94,7 @@ class ButtonManager
         $lang           = $GLOBALS['TL_LANG']['MSC'];
 
         if (null !== $di) {
-            $event = new OnManuelRenewEvent();
+            $event = new OnManualRenewEvent();
             $event->setLang($lang);
             $event->setTable($table);
             $event->setCteId((int)$id);
@@ -102,7 +102,7 @@ class ButtonManager
             $event->setGetlawServer($getlawServer);
             $event->setApiVersion($apiVersion);
             $event->setGetlawHeader($getlawHeader);
-            $di->dispatch($event, $event::NAME);
+            $di->dispatch($event);
         }
     }
 }

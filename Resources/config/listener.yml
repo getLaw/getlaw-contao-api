@@ -1,75 +1,42 @@
 # EventListener
 services:
-    # OnLoadDataListener
-    esit_getlawclient.listener.on_handle_data_listener.handle_db_data_string:
-        class: Esit\Getlawclient\Classes\Listener\OnHandleDataListener
-        arguments: ['@esit_getlawclient.services.helper.json_helper']
+    _defaults:
+        autowire: true
+        autoconfigure: true
+
+
+    Esit\Getlawclient\Classes\Listener\OnHandleDataListener:
         tags:
-            - { name: kernel.event_listener, event: getlaw.on.handle.data.event, method: handleDbDataString, priority: 3096 }
+            - { name: kernel.event_listener, event: Esit\Getlawclient\Classes\Events\OnHandleDataEvent, method: handleDbDataString, priority: 3072 }
+            - { name: kernel.event_listener, event: Esit\Getlawclient\Classes\Events\OnHandleDataEvent, method: loadData, priority: 2048 }
+            - { name: kernel.event_listener, event: Esit\Getlawclient\Classes\Events\OnHandleDataEvent, method: saveData, priority: 1024 }
 
-    esit_getlawclient.listener.on_handle_data_listener.load_data:
-        class: Esit\Getlawclient\Classes\Listener\OnHandleDataListener
-        arguments: ['@esit_getlawclient.services.helper.json_helper']
+
+    Esit\Getlawclient\Classes\Listener\OnLoadDataListener:
         tags:
-            - { name: kernel.event_listener, event: getlaw.on.handle.data.event, method: loadData, priority: 2048 }
+            - { name: kernel.event_listener, event: Esit\Getlawclient\Classes\Events\OnLoadDataEvent, method: generateUrl, priority: 2048 }
+            - { name: kernel.event_listener, event: Esit\Getlawclient\Classes\Events\OnLoadDataEvent, method: loadData, priority: 1024 }
 
-    esit_getlawclient.listener.on_handle_data_listener.save_data:
-        class: Esit\Getlawclient\Classes\Listener\OnHandleDataListener
-        arguments: ['@esit_getlawclient.services.helper.json_helper']
+
+    Esit\Getlawclient\Classes\Listener\OnSaveDataListener:
         tags:
-            - { name: kernel.event_listener, event: getlaw.on.handle.data.event, method: saveData, priority: 1024 }
+            - { name: kernel.event_listener, event: Esit\Getlawclient\Classes\Events\OnSaveDataEvent, method: generateJson, priority: 2048 }
+            - { name: kernel.event_listener, event: Esit\Getlawclient\Classes\Events\OnSaveDataEvent, method: saveData, priority: 1024 }
 
 
-    # OnLoadDataListener
-    esit_getlawclient.listener.on_load_data_listener.generate_url:
-        class: Esit\Getlawclient\Classes\Listener\OnLoadDataListener
-        arguments: ['@esit_getlawclient.services.factories.http_factory', '@esit_getlawclient.services.helper.log_helper', '@esit_getlawclient.services.helper.json_helper']
+    Esit\Getlawclient\Classes\Listener\OnManualRenewListener:
         tags:
-            - { name: kernel.event_listener, event: getlaw.on.load.data.event, method: generateUrl, priority: 2048 }
+            - { name: kernel.event_listener, event: Esit\Getlawclient\Classes\Events\OnManualRenewEvent, method: loadCte, priority: 3072 }
+            - { name: kernel.event_listener, event: Esit\Getlawclient\Classes\Events\OnManualRenewEvent, method: loadText, priority: 2048 }
+            - { name: kernel.event_listener, event: Esit\Getlawclient\Classes\Events\OnManualRenewEvent, method: redirect, priority: 1024 }
 
-    esit_getlawclient.listener.on_load_data_listener.load_data:
-        class: Esit\Getlawclient\Classes\Listener\OnLoadDataListener
-        arguments: ['@esit_getlawclient.services.factories.http_factory', '@esit_getlawclient.services.helper.log_helper', '@esit_getlawclient.services.helper.json_helper']
+    Esit\Getlawclient\Classes\Listener\OnHandleMessageListener:
         tags:
-            - { name: kernel.event_listener, event: getlaw.on.load.data.event, method: loadData, priority: 1024 }
-
-
-    # OnLoadDataListener
-    esit_getlawclient.listener.on_save_data_listener.generate_json:
-        class: Esit\Getlawclient\Classes\Listener\OnSaveDataListener
-        arguments: ['@database_connection', '@esit_getlawclient.services.helper.json_helper']
-        tags:
-            - { name: kernel.event_listener, event: getlaw.on.save.data.event, method: generateJson, priority: 2048 }
-
-    esit_getlawclient.listener.on_save_data_listener.save_data:
-        class: Esit\Getlawclient\Classes\Listener\OnSaveDataListener
-        arguments: ['@database_connection', '@esit_getlawclient.services.helper.json_helper']
-        tags:
-            - { name: kernel.event_listener, event: getlaw.on.save.data.event, method: saveData, priority: 1024 }
-
-
-    # OnManuelRenewListener
-    esit_getlawclient.listener.on_save_data_listener.load_cte:
-        class: Esit\Getlawclient\Classes\Listener\OnManuelRenewListener
-        arguments: ['@database_connection', '@esit_getlawclient.services.helper.contao_helper']
-        tags:
-            - { name: kernel.event_listener, event: getlaw.on.manual.renew.event, method: loadCte, priority: 4096 }
-
-    esit_getlawclient.listener.on_save_data_listener.load_text:
-        class: Esit\Getlawclient\Classes\Listener\OnManuelRenewListener
-        arguments: [ '@database_connection', '@esit_getlawclient.services.helper.contao_helper']
-        tags:
-            - { name: kernel.event_listener, event: getlaw.on.manual.renew.event, method: loadText, priority: 3072 }
-
-    esit_getlawclient.listener.on_save_data_listener.generate_message:
-        class: Esit\Getlawclient\Classes\Listener\OnManuelRenewListener
-        arguments: [ '@database_connection', '@esit_getlawclient.services.helper.contao_helper']
-        tags:
-            - { name: kernel.event_listener, event: getlaw.on.manual.renew.event, method: generateMessage, priority: 2048 }
-
-    esit_getlawclient.listener.on_save_data_listener.redirect:
-        class: Esit\Getlawclient\Classes\Listener\OnManuelRenewListener
-        arguments: [ '@database_connection', '@esit_getlawclient.services.helper.contao_helper']
-        tags:
-            - { name: kernel.event_listener, event: getlaw.on.manual.renew.event, method: redirect, priority: 1024 }
-
+            - {name: kernel.event_listener, event: Esit\Getlawclient\Classes\Events\OnManualRenewEvent, method: handleKeyEmpty, priority: 8192}
+            - {name: kernel.event_listener, event: Esit\Getlawclient\Classes\Events\OnManualRenewEvent, method: handleKeyTooShort, priority: 7168}
+            - {name: kernel.event_listener, event: Esit\Getlawclient\Classes\Events\OnManualRenewEvent, method: handleKeyTooLong, priority: 6144}
+            - {name: kernel.event_listener, event: Esit\Getlawclient\Classes\Events\OnManualRenewEvent, method: handleWrongChar, priority: 5120}
+            - {name: kernel.event_listener, event: Esit\Getlawclient\Classes\Events\OnManualRenewEvent, method: handleWrongKey, priority: 4096}
+            - {name: kernel.event_listener, event: Esit\Getlawclient\Classes\Events\OnManualRenewEvent, method: handleApiError, priority: 3072}
+            - {name: kernel.event_listener, event: Esit\Getlawclient\Classes\Events\OnManualRenewEvent, method: setSuccessMessage, priority: 2048}
+            - {name: kernel.event_listener, event: Esit\Getlawclient\Classes\Events\OnManualRenewEvent, method: setErrorMessage, priority: 1024}

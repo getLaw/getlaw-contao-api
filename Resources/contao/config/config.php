@@ -41,6 +41,10 @@ $GLOBALS['BE_MOD']['content']['article']['renew']   = [\Esit\Getlawclient\Classe
  */
 $GLOBALS['TL_CTE']['getlaw']['getlawtext']          = \Esit\Getlawclient\Classes\Contao\Elements\ContentGetlawText::class;
 
+/**
+ * Hooks
+ */
+$GLOBALS['TL_HOOKS']['addCustomRegexp'][]           = [\Esit\Getlawclient\Classes\Contao\Hooks\RgxpHandler::class, 'handleApiKey'];
 
 /**
  * getLaw-Settings

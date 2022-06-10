@@ -16,6 +16,7 @@ namespace Esit\Getlawclient\Classes\Services\Helper;
 
 use Contao\CoreBundle\Monolog\ContaoContext;
 use Monolog\Logger;
+use Psr\Log\LoggerInterface;
 
 /**
  * Class LogHelper
@@ -31,9 +32,9 @@ class LogHelper
 
     /**
      * LogHelper constructor.
-     * @param Logger $logger
+     * @param LoggerInterface $logger
      */
-    public function __construct(Logger $logger)
+    public function __construct(LoggerInterface $logger)
     {
         $this->logger = $logger;
     }

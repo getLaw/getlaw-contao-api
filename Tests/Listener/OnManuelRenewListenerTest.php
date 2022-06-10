@@ -12,8 +12,8 @@ namespace Esit\Getlawclient\Tests\Listener;
 
 use Doctrine\DBAL\Connection;
 use Esit\Getlawclient\Classes\Events\OnHandleDataEvent;
-use Esit\Getlawclient\Classes\Events\OnManuelRenewEvent;
-use Esit\Getlawclient\Classes\Listener\OnManuelRenewListener;
+use Esit\Getlawclient\Classes\Events\OnManualRenewEvent;
+use Esit\Getlawclient\Classes\Listener\OnManualRenewListener;
 use Esit\Getlawclient\Classes\Services\Helper\ContaoHelper;
 use Esit\Getlawclient\EsitTestCase;
 use Symfony\Component\EventDispatcher\EventDispatcher;
@@ -57,8 +57,8 @@ class OnManuelRenewListenerTest extends EsitTestCase
         $query      = $this->getQueryBuilderMock();
         $connection = $this->getConnectionMock($query);
         $query->expects(self::never())->method('select');
-        $listener   = new OnManuelRenewListener($connection, $this->ctoHelper);
-        $event      = new OnManuelRenewEvent();
+        $listener   = new OnManualRenewListener($connection, $this->ctoHelper);
+        $event      = new OnManualRenewEvent();
         $event->setTable('tl_test');
 
         $listener->loadCte($event);
@@ -70,8 +70,8 @@ class OnManuelRenewListenerTest extends EsitTestCase
         $query      = $this->getQueryBuilderMock();
         $connection = $this->getConnectionMock($query);
         $query->expects(self::never())->method('select');
-        $listener   = new OnManuelRenewListener($connection, $this->ctoHelper);
-        $event      = new OnManuelRenewEvent();
+        $listener   = new OnManualRenewListener($connection, $this->ctoHelper);
+        $event      = new OnManualRenewEvent();
         $event->setCteId(12);
 
         $listener->loadCte($event);
@@ -87,8 +87,8 @@ class OnManuelRenewListenerTest extends EsitTestCase
         $this->addMethodeMock($query, 'from', $table);
         $this->addMethodeMock($query, 'where', "id = $id");
         $connection = $this->getConnectionMock($query);
-        $listener   = new OnManuelRenewListener($connection, $this->ctoHelper);
-        $event      = new OnManuelRenewEvent();
+        $listener   = new OnManualRenewListener($connection, $this->ctoHelper);
+        $event      = new OnManualRenewEvent();
         $event->setTable($table);
         $event->setCteId($id);
 
@@ -109,8 +109,8 @@ class OnManuelRenewListenerTest extends EsitTestCase
         $this->addMethodeMock($query, 'from', $table);
         $this->addMethodeMock($query, 'where', "id = $id");
         $connection = $this->getConnectionMock($query);
-        $listener   = new OnManuelRenewListener($connection, $this->ctoHelper);
-        $event      = new OnManuelRenewEvent();
+        $listener   = new OnManualRenewListener($connection, $this->ctoHelper);
+        $event      = new OnManualRenewEvent();
         $event->setTable($table);
         $event->setCteId($id);
 
@@ -131,8 +131,8 @@ class OnManuelRenewListenerTest extends EsitTestCase
         $this->addMethodeMock($query, 'from', $table);
         $this->addMethodeMock($query, 'where', "id = $id");
         $connection = $this->getConnectionMock($query);
-        $listener   = new OnManuelRenewListener($connection, $this->ctoHelper);
-        $event      = new OnManuelRenewEvent();
+        $listener   = new OnManualRenewListener($connection, $this->ctoHelper);
+        $event      = new OnManualRenewEvent();
         $event->setTable($table);
         $event->setCteId($id);
 
@@ -152,8 +152,8 @@ class OnManuelRenewListenerTest extends EsitTestCase
         $version        = '1';
         $name           = 'on.test.my.methode';
         $this->di->expects(self::never())->method('dispatch');
-        $listener       = new OnManuelRenewListener($this->connection, $this->ctoHelper);
-        $event          = new OnManuelRenewEvent();
+        $listener       = new OnManualRenewListener($this->connection, $this->ctoHelper);
+        $event          = new OnManualRenewEvent();
         $event->setCteId($cteId);
         $event->setTextkey($textkey);
         $event->setGetlawServer($getlawServer);
@@ -172,8 +172,8 @@ class OnManuelRenewListenerTest extends EsitTestCase
         $version        = '1';
         $name           = 'on.test.my.methode';
         $this->di->expects(self::never())->method('dispatch');
-        $listener       = new OnManuelRenewListener($this->connection, $this->ctoHelper);
-        $event          = new OnManuelRenewEvent();
+        $listener       = new OnManualRenewListener($this->connection, $this->ctoHelper);
+        $event          = new OnManualRenewEvent();
         $event->setCteId($cteId);
         $event->setTextkey($textkey);
         $event->setGetlawServer($getlawServer);
@@ -192,8 +192,8 @@ class OnManuelRenewListenerTest extends EsitTestCase
         $version        = '1';
         $name           = 'on.test.my.methode';
         $this->di->expects(self::never())->method('dispatch');
-        $listener       = new OnManuelRenewListener($this->connection, $this->ctoHelper);
-        $event          = new OnManuelRenewEvent();
+        $listener       = new OnManualRenewListener($this->connection, $this->ctoHelper);
+        $event          = new OnManualRenewEvent();
         $event->setCteId($cteId);
         $event->setTextkey($textkey);
         $event->setGetlawServer($getlawServer);
@@ -212,8 +212,8 @@ class OnManuelRenewListenerTest extends EsitTestCase
         $version        = '1';
         $name           = 'on.test.my.methode';
         $this->di->expects(self::never())->method('dispatch');
-        $listener       = new OnManuelRenewListener($this->connection, $this->ctoHelper);
-        $event          = new OnManuelRenewEvent();
+        $listener       = new OnManualRenewListener($this->connection, $this->ctoHelper);
+        $event          = new OnManualRenewEvent();
         $event->setCteId($cteId);
         $event->setTextkey($textkey);
         $event->setGetlawServer($getlawServer);
@@ -232,8 +232,8 @@ class OnManuelRenewListenerTest extends EsitTestCase
         $version        = '';
         $name           = 'on.test.my.methode';
         $this->di->expects(self::never())->method('dispatch');
-        $listener       = new OnManuelRenewListener($this->connection, $this->ctoHelper);
-        $event          = new OnManuelRenewEvent();
+        $listener       = new OnManualRenewListener($this->connection, $this->ctoHelper);
+        $event          = new OnManualRenewEvent();
         $event->setCteId($cteId);
         $event->setTextkey($textkey);
         $event->setGetlawServer($getlawServer);
@@ -259,88 +259,29 @@ class OnManuelRenewListenerTest extends EsitTestCase
                 self::assertSame('12346798-987654321', $event->getTextkey());
                 self::assertSame(12, $event->getCteId());
                 self::assertTrue($event->getManualRenew());
+                $event->setDataFromApi(['test']);
 
                 return true;
-            }),
-            self::equalTo(OnHandleDataEvent::NAME)
+            })
         );
-        $listener       = new OnManuelRenewListener($this->connection, $this->ctoHelper);
-        $event          = new OnManuelRenewEvent();
+        $listener       = new OnManualRenewListener($this->connection, $this->ctoHelper);
+        $event          = new OnManualRenewEvent();
+        $event->setLang([]);
         $event->setCteId($cteId);
         $event->setTextkey($textkey);
         $event->setGetlawServer($getlawServer);
         $event->setGetlawHeader($header);
         $event->setApiVersion($version);
         $listener->loadText($event, $name, $this->di);
-    }
-
-
-    public function testGenerateMessageAddDefaultErrorMessageIfErrorIsNotSet(): void
-    {
-        $msg        = 'Beim Laden des Textes ist ein Fehler aufgetreten';
-        $this->ctoHelper->expects(self::once())->method('addError')->with($msg);
-        $this->ctoHelper->expects(self::never())->method('addCornfirmation');
-        $listener   = new OnManuelRenewListener($this->connection, $this->ctoHelper);
-        $event      = new OnManuelRenewEvent();
-        $listener->generateMessage($event);
-    }
-
-
-    public function testGenerateMessageAddErrorMessageIfErrorIsNotSet(): void
-    {
-        $msg        = 'testErrorMessage';
-        $this->ctoHelper->expects(self::once())->method('addError')->with($msg);
-        $this->ctoHelper->expects(self::never())->method('addCornfirmation');
-        $listener   = new OnManuelRenewListener($this->connection, $this->ctoHelper);
-        $event      = new OnManuelRenewEvent();
-        $event->setLang(['apiError' => $msg]);
-        $listener->generateMessage($event);
-    }
-
-
-    public function testGenerateMessageAddErrorMessageIfErrorIsTrue(): void
-    {
-        $msg        = 'testErrorMessage';
-        $this->ctoHelper->expects(self::once())->method('addError')->with($msg);
-        $this->ctoHelper->expects(self::never())->method('addCornfirmation');
-        $listener   = new OnManuelRenewListener($this->connection, $this->ctoHelper);
-        $event      = new OnManuelRenewEvent();
-        $event->setLang(['apiError' => $msg]);
-        $event->setDataFromApi(['error'=>true]);
-        $listener->generateMessage($event);
-    }
-
-
-    public function testGenerateMessageAddDefaultCornfirmationMessageIfErrorIsFalse(): void
-    {
-        $msg        = 'Lade des Text erfolgreich';
-        $this->ctoHelper->expects(self::never())->method('addError');
-        $this->ctoHelper->expects(self::once())->method('addCornfirmation')->with($msg);
-        $listener   = new OnManuelRenewListener($this->connection, $this->ctoHelper);
-        $event      = new OnManuelRenewEvent();
-        $event->setDataFromApi(['error'=>false]);
-        $listener->generateMessage($event);
-    }
-
-
-    public function testGenerateMessageAddCornfirmationMessageIfErrorIsFalse(): void
-    {
-        $msg        = 'TestSuccess';
-        $this->ctoHelper->expects(self::never())->method('addError');
-        $this->ctoHelper->expects(self::once())->method('addCornfirmation')->with($msg);
-        $listener   = new OnManuelRenewListener($this->connection, $this->ctoHelper);
-        $event      = new OnManuelRenewEvent();
-        $event->setLang(['apiSuccess' => $msg]);
-        $event->setDataFromApi(['error'=>false]);
-        $listener->generateMessage($event);
+        self::assertSame(['test'], $event->getDataFromApi());
     }
 
 
     public function testRedirectDoNothingIfArticleIdIsEmpty(): void
     {
         $this->ctoHelper->expects(self::never())->method('redirect');
-        $listener   = new OnManuelRenewListener($this->connection, $this->ctoHelper);
-        $event      = new OnManuelRenewEvent();
+        $listener   = new OnManualRenewListener($this->connection, $this->ctoHelper);
+        $event      = new OnManualRenewEvent();
         $listener->redirect($event);
     }
 
@@ -350,8 +291,8 @@ class OnManuelRenewListenerTest extends EsitTestCase
         $pid        = 12;
         $url        = "contao?do=article&table=tl_content&id=$pid";
         $this->ctoHelper->expects(self::once())->method('redirect')->with($url);
-        $listener   = new OnManuelRenewListener($this->connection, $this->ctoHelper);
-        $event      = new OnManuelRenewEvent();
+        $listener   = new OnManualRenewListener($this->connection, $this->ctoHelper);
+        $event      = new OnManualRenewEvent();
         $event->setArticleId($pid);
         $listener->redirect($event);
     }

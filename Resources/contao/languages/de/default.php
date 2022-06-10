@@ -12,13 +12,18 @@
 /**
  * Content Elemente
  */
-$GLOBALS['TL_LANG']['CTE']['getlaw']        = ['getLaw', 'getLaw'];
-$GLOBALS['TL_LANG']['CTE']['getlawtext']    = ['getLaw - Text', 'getLaw - Text'];
+$GLOBALS['TL_LANG']['CTE']['getlaw']            = ['getLaw', 'getLaw'];
+$GLOBALS['TL_LANG']['CTE']['getlawtext']        = ['getLaw - Text', 'getLaw - Text'];
 
 
 /**
  * Misc
  */
-$GLOBALS['TL_LANG']['MSC']['nodata']        = 'Keinen Text gefunden.';
-$GLOBALS['TL_LANG']['MSC']['apiError']      = 'Beim Laden des Textes ist ein Fehler aufgetreten.';
-$GLOBALS['TL_LANG']['MSC']['apiSuccess']    = 'Laden des Text war erfolgreich.';
+$GLOBALS['TL_LANG']['MSC']['nodata']            = 'Keinen Text gefunden.';
+$GLOBALS['TL_LANG']['MSC']['apiSuccess']        = 'Laden des Text war erfolgreich.';
+$GLOBALS['TL_LANG']['MSC']['apiError']          = 'Beim Laden des Textes ist ein Fehler aufgetreten.';
+$GLOBALS['TL_LANG']['MSC']['apiErrorNoKey']     = 'Es wurde noch kein API-Schlüssel eingetragen.';
+$GLOBALS['TL_LANG']['MSC']['apiErrorTooShort']  = 'Der API-Schlüssel ist zu kurz.';
+$GLOBALS['TL_LANG']['MSC']['apiErrorTooLong']   = 'Der API-Schlüssel ist zu lang.';
+$GLOBALS['TL_LANG']['MSC']['apiErrorWorngChar'] = 'Der API-Schlüssel enthält ungültige Zeichen.';
+$GLOBALS['TL_LANG']['MSC']['apiErrorNotFound']  = 'Der API-Schlüssel ist falsch.';

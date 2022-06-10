@@ -17,7 +17,7 @@ namespace Esit\Getlawclient\Classes\Listener;
 use Doctrine\DBAL\Connection;
 use Doctrine\DBAL\Query\QueryBuilder;
 use Esit\Getlawclient\Classes\Events\OnHandleDataEvent;
-use Esit\Getlawclient\Classes\Events\OnManuelRenewEvent;
+use Esit\Getlawclient\Classes\Events\OnManualRenewEvent;
 use Esit\Getlawclient\Classes\Services\Helper\ContaoHelper;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
@@ -25,7 +25,7 @@ use Symfony\Component\EventDispatcher\EventDispatcherInterface;
  * Class OnManuelRenewListener
  * @package Esit\Getlawclient\Classes\Listener
  */
-class OnManuelRenewListener
+class OnManualRenewListener
 {
     /**
      * @var QueryBuilder
@@ -46,17 +46,17 @@ class OnManuelRenewListener
      */
     public function __construct(Connection $connection, ContaoHelper $ctoHelper)
     {
-        $this->query        = $connection->createQueryBuilder();
-        $this->contaoHelper = $ctoHelper;
+        $this->query            = $connection->createQueryBuilder();
+        $this->contaoHelper     = $ctoHelper;
     }
 
 
     /**
      * Lädt die Daten des CTE.
-     * @param OnManuelRenewEvent $event
+     * @param OnManualRenewEvent $event
      * @throws \Doctrine\DBAL\Exception
      */
-    public function loadCte(OnManuelRenewEvent $event): void
+    public function loadCte(OnManualRenewEvent $event): void
     {
         $id     = $event->getCteId();
         $table  = $event->getTable();
@@ -78,17 +78,18 @@ class OnManuelRenewListener
 
     /**
      * Ruft das Laden des Textes auf.
-     * @param OnManuelRenewEvent       $event
+     * @param OnManualRenewEvent       $event
      * @param string                   $name
      * @param EventDispatcherInterface $di
      */
-    public function loadText(OnManuelRenewEvent $event, string $name, EventDispatcherInterface $di): void
+    public function loadText(OnManualRenewEvent $event, string $name, EventDispatcherInterface $di): void
     {
         $cteId          = $event->getCteId();
         $textkey        = $event->getTextkey();
         $getlawServer   = $event->getGetlawServer();
         $header         = $event->getGetlawHeader();
         $version        = $event->getApiVersion();
+        $lang           = $event->getLang();
 
         if (!empty($cteId) && !empty($textkey) && !empty($getlawServer) && !empty($header) && !empty($version)) {
             $handleData = new OnHandleDataEvent();
@@ -98,39 +99,19 @@ class OnManuelRenewListener
             $handleData->setTextkey($textkey);
             $handleData->setCteId($cteId);
             $handleData->setManualRenew(true);
+            $handleData->setLang($lang);
 
-            $di->dispatch($handleData, $handleData::NAME);
+            $di->dispatch($handleData);
             $event->setDataFromApi($handleData->getDataFromApi());
         }
     }
 
 
     /**
-     * Erzeugt die Rückmeldung an den Nutzer.
-     * @param OnManuelRenewEvent $event
-     */
-    public function generateMessage(OnManuelRenewEvent $event): void
-    {
-        $data   = $event->getDataFromApi();
-        $lang   = $event->getLang();
-
-        if (isset($data['error']) && false === $data['error']) {
-            $msg = !empty($lang['apiSuccess']) ? $lang['apiSuccess'] : 'Lade des Text erfolgreich';
-            $this->contaoHelper->addCornfirmation($msg);
-
-            return;
-        }
-
-        $msg = !empty($lang['apiError']) ? $lang['apiError'] : 'Beim Laden des Textes ist ein Fehler aufgetreten';
-        $this->contaoHelper->addError($msg);
-    }
-
-
-    /**
      * Leitet zurück zur Liste.
-     * @param OnManuelRenewEvent $event
+     * @param OnManualRenewEvent $event
      */
-    public function redirect(OnManuelRenewEvent $event): void
+    public function redirect(OnManualRenewEvent $event): void
     {
         $pid = $event->getArticleId();
 
