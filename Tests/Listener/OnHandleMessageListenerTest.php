@@ -278,7 +278,7 @@ class OnHandleMessageListenerTest extends EsitTestCase
 
     public function testSetSuccessMessageSetDefaultMessageIfNoErrorIsSetAndSetMessageIsTrue(): void
     {
-        $msg = 'Lade des Text erfolgreich.';
+        $msg = 'Laden des Text war erfolgreich.';
         $this->event->expects(self::once())->method('getLang')->willReturn([]);
         $this->event->expects(self::once())->method('getSetMessage')->willReturn(true);
         $this->event->expects(self::once())->method('getMessageText')->willReturn('');

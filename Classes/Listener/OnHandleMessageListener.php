@@ -173,7 +173,7 @@ class OnHandleMessageListener
         $lang = $event->getLang();
 
         if ('' === $event->getMessageText() && true === $event->getSetMessage()) {
-            $msg = 'Lade des Text erfolgreich.';
+            $msg = 'Laden des Text war erfolgreich.';
 
             if (!empty($lang['apiSuccess'])) {
                 $msg = $lang['apiSuccess'];
