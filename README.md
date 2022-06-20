@@ -15,8 +15,8 @@ __getLaw:__ <info@getLaw.de>
 
 ## Voraussetzungen
 
-- php: >=7.3
-- contao/core-bundle: >=4.4
+- php: >=8.0
+- contao/core-bundle: >=4.13
 
 
 ## Installation
