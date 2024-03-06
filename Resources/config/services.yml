@@ -10,7 +10,6 @@ services:
 
     # Helper
     Esit\Getlawclient\Classes\Services\Helper\ContaoHelper:
-        class: Esit\Getlawclient\Classes\Services\Helper\ContaoHelper
 
     Esit\Getlawclient\Classes\Services\Helper\JsonHelper:
         public: true
@@ -21,6 +20,14 @@ services:
     Esit\Getlawclient\Classes\Services\Helper\LogHelper:
 
     Esit\Getlawclient\Classes\Services\Helper\MessageHelper:
+
+    Esit\Getlawclient\Classes\Services\Helper\ScopeHelper:
+        public: true
+
+    Esit\Getlawclient\Classes\Services\Helper\TokenHelper:
+        public: true
+        arguments:
+            - "%contao.csrf_token_name%"
 
 
     # Hooks

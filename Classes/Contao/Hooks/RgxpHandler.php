@@ -23,7 +23,7 @@ class RgxpHandler
     /**
      * @var MessageHelper
      */
-    protected $messageHelper;
+    protected MessageHelper $messageHelper;
 
 
     /**

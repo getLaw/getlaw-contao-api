@@ -19,6 +19,7 @@ use Contao\Image;
 use Contao\StringUtil;
 use Contao\System;
 use Esit\Getlawclient\Classes\Events\OnManualRenewEvent;
+use Esit\Getlawclient\Classes\Services\Helper\TokenHelper;
 
 /**
  * Class ButtonManager
@@ -60,13 +61,12 @@ class ButtonManager
         $link = '';
 
         if ('getlawtext' === $row['type']) {
-            $container    = System::getContainer();
-            $tokenManager = $container->get('security.csrf.token_manager');
-            $tokenName    = $container->getParameter('contao.csrf_token_name');
-            $href .= '&id=' . $row['id'];
+            $container      = System::getContainer();
+            $tokenHelper    = $container->get(TokenHelper::class);
+            $href          .= '&id=' . $row['id'];
 
-            if (null !== $tokenManager) {
-                $href .= '&rt=' . $tokenManager->getToken($tokenName)->getValue();
+            if (null !== $tokenHelper) {
+                $href .= '&rt=' . $tokenHelper->getToken();
             }
 
             $link = '<a href="' . Controller::addToUrl($href) . '" title="';

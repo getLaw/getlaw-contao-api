@@ -14,14 +14,17 @@ declare(strict_types=1);
 
 namespace Esit\Getlawclient\Classes\Contao\Elements;
 
+use Contao\BackendTemplate;
+use Contao\ContentElement;
 use Contao\System;
 use Esit\Getlawclient\Classes\Services\Helper\LoadDataHelper;
+use Esit\Getlawclient\Classes\Services\Helper\ScopeHelper;
 
 /**
  * Class ContentGetlawText
  * @package Getlawclient\Classes\Contao\Elements
  */
-class ContentGetlawText extends \ContentElement
+class ContentGetlawText extends ContentElement
 {
     /**
      * Template
@@ -41,7 +44,9 @@ class ContentGetlawText extends \ContentElement
      */
     protected function compile(): void
     {
-        if ('BE' === TL_MODE) {
+        $scopeHelper = System::getContainer()->get(ScopeHelper::class);
+
+        if (true === $scopeHelper?->isBackend()) {
             $this->genBeOutput();
         } else {
             $this->helper = System::getContainer()->get(LoadDataHelper::class);
@@ -56,7 +61,7 @@ class ContentGetlawText extends \ContentElement
     protected function genBeOutput(): void
     {
         $this->strTemplate        = 'be_wildcard';
-        $this->Template           = new \BackendTemplate($this->strTemplate);
+        $this->Template           = new BackendTemplate($this->strTemplate);
         $this->Template->title    = $this->headline;
         $this->Template->wildcard = '### ContentGetlawText ###';
     }
