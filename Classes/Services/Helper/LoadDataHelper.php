@@ -29,21 +29,21 @@ class LoadDataHelper
      * Url der getLaw-Schnittstelle
      * @var string
      */
-    protected $getlawServer = '';
+    protected $getlawServer = 'https://www.getlaw.de/api/texts/';
 
 
     /**
      * Name des Versionsheaders der getLaw-Api.
      * @var string
      */
-    protected $getlawHeader = '';
+    protected $getlawHeader = 'X-getLaw-API-Version';
 
 
     /**
      * Majorversion der API.
      * @var string
      */
-    protected $apiVersion = '';
+    protected $apiVersion = '1';
 
 
     /**
@@ -58,10 +58,19 @@ class LoadDataHelper
      */
     public function __construct(EventDispatcherInterface $di)
     {
-        $this->di           = $di;
-        $this->getlawServer = $GLOBALS['getLaw']['server_url'] ?: 'https://www.getlaw.de/api/texts/';
-        $this->getlawHeader = $GLOBALS['getLaw']['api_header'] ?: 'X-getLaw-API-Version';
-        $this->apiVersion   = $GLOBALS['getLaw']['api_version'] ?: '1';
+        $this->di = $di;
+
+        if (!empty($GLOBALS['getLaw']['server_url'])) {
+            $this->getlawServer = $GLOBALS['getLaw']['server_url'];
+        }
+
+        if (!empty($GLOBALS['getLaw']['api_header'])) {
+            $this->getlawHeader = $GLOBALS['getLaw']['api_header'];
+        }
+
+        if (!empty($GLOBALS['getLaw']['api_version'])) {
+            $this->apiVersion = $GLOBALS['getLaw']['api_version'];
+        }
     }
 
 

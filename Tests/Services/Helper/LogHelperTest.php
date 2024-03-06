@@ -27,7 +27,7 @@ class LogHelperTest extends TestCase
     {
         $msg    = 'TestErrorMessage';
         $place  = 'DemoClass::DemoMethode';
-        $context= new ContaoContext($place, TL_ERROR);
+        $context= new ContaoContext($place, 'ERROR');
         $logger = $this->getMockBuilder(Logger::class)
                        ->disableOriginalConstructor()
                        ->getMock();
