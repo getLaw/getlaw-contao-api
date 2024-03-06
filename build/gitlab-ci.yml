@@ -1,17 +1,18 @@
 stages:
-    - test
+    - test_cto4.13
 
-runtests:
-    stage: test
+test_cto4.13_php8.1:
+    stage: test_cto4.13
     except:
         - tags
-    image: easysolutionsit/contao-testsuite:1.0.14
+    image: projekt.easysolutionsit.de:5000/testsuite_cto4.13_php8.1:1.0.0
     variables:
         GIT_STRATEGY: none
+        PROJECT_NAME: getlaw-contao-api
     before_script:
-        - COMPOSER_MEMORY_LIMIT=-1 /usr/local/bin/composer.phar config repositories.getlaw-contao-api vcs $PROJEKT_URL --working-dir=/htdocs/
-        - COMPOSER_MEMORY_LIMIT=-1 /usr/local/bin/composer.phar require getlaw/getlaw-contao-api:dev-$CI_COMMIT_REF_NAME --working-dir=/htdocs/
+        - COMPOSER_MEMORY_LIMIT=-1 /usr/local/bin/composer.phar config repositories.$PROJECT_NAME vcs $PROJEKT_URL --working-dir=/htdocs/
+        - COMPOSER_MEMORY_LIMIT=-1 /usr/local/bin/composer.phar require getlaw/$PROJECT_NAME:dev-$CI_COMMIT_REF_NAME --working-dir=/htdocs/
     script:
-        - cd /htdocs/vendor/getlaw/getlaw-contao-api/
+        - cd /htdocs/vendor/getlaw/$PROJECT_NAME/
         - ./build/runtests.sh
     coverage: '/Methods: \d+\.\d+/'
