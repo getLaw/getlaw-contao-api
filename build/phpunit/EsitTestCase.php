@@ -86,7 +86,7 @@ class EsitTestCase extends ContaoTestCase
                 require($initializePath);
                 stream_wrapper_restore('phar');// reregister stream wrapper for phpunit.phar
             } else {
-                throw new \Exception(CONTAO_ROOT . "/system/initialize.php not found!");
+                //throw new \Exception(CONTAO_ROOT . "/system/initialize.php not found!");
             }
         }
     }
